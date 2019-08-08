@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://itnote.tech/2019/08/04/Hello-Hexo/</loc>
+    
+    <lastmod>2019-08-08T00:37:48.485Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/categories/index.html</loc>
+    
+    <lastmod>2019-08-06T05:14:11.852Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/tags/index.html</loc>
+    
+    <lastmod>2019-08-06T05:13:08.447Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/2019/08/04/hello-world/</loc>
+    
+    <lastmod>2019-08-04T09:00:17.162Z</lastmod>
+    
+  </url>
+  
+</urlset>

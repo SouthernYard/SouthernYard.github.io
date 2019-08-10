@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="QDE_X8xOqjR_NftZ0cJjE-Nqlzo6NV2BvAdy6ZN8EdA">
+    
+    
+    
+    
+    <title>在云服务器上搭建Hexo博客 | 南院大王 | 十年饮冰，难凉热血。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="博客,Hexo,Https,WordPress">
+    <meta name="description" content="前言最近准备搭建一个自己的博客，历时一个星期的空余时间。搭建博客的主要目的是想记录自己的技术笔记和心得，方便跟人分享和自己查阅。很久以前我就有搭建博客的想法，但是没有实践，一个懒，一个没有找到合适的博客系统。后来发现有Hexo这个博客系统，但是看了一些教程，发现搭建起来很麻烦，我就又放弃了，最近在朋友的鼓励下，终于把想法实践了。 在搭建博客之前，我对比我所知道两个博客系统，WordPress和He">
+<meta name="keywords" content="博客,Hexo,Https,WordPress">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在云服务器上搭建Hexo博客">
+<meta property="og:url" content="http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/index.html">
+<meta property="og:site_name" content="南院大王">
+<meta property="og:description" content="前言最近准备搭建一个自己的博客，历时一个星期的空余时间。搭建博客的主要目的是想记录自己的技术笔记和心得，方便跟人分享和自己查阅。很久以前我就有搭建博客的想法，但是没有实践，一个懒，一个没有找到合适的博客系统。后来发现有Hexo这个博客系统，但是看了一些教程，发现搭建起来很麻烦，我就又放弃了，最近在朋友的鼓励下，终于把想法实践了。 在搭建博客之前，我对比我所知道两个博客系统，WordPress和He">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://itnote.tech/images/pasted-6.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-9.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-11.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-13.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-15.png">
+<meta property="og:updated_time" content="2019-08-10T11:47:05.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在云服务器上搭建Hexo博客">
+<meta name="twitter:description" content="前言最近准备搭建一个自己的博客，历时一个星期的空余时间。搭建博客的主要目的是想记录自己的技术笔记和心得，方便跟人分享和自己查阅。很久以前我就有搭建博客的想法，但是没有实践，一个懒，一个没有找到合适的博客系统。后来发现有Hexo这个博客系统，但是看了一些教程，发现搭建起来很麻烦，我就又放弃了，最近在朋友的鼓励下，终于把想法实践了。 在搭建博客之前，我对比我所知道两个博客系统，WordPress和He">
+<meta name="twitter:image" content="http://itnote.tech/images/pasted-6.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Shawn Peng</h5>
+          <a href="mailto:shawnpeng@yeah.net" title="shawnpeng@yeah.net" class="mail">shawnpeng@yeah.net</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SouthernYard" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">在云服务器上搭建Hexo博客</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">在云服务器上搭建Hexo博客</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-10T08:49:00.000Z" itemprop="datePublished" class="page-time">
+  2019-08-10
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#前言"><span class="post-toc-number">1.</span> <span class="post-toc-text">前言</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#博客搭建"><span class="post-toc-number">2.</span> <span class="post-toc-text">博客搭建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#服务器和域名"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">服务器和域名</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#服务器版本"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">服务器版本</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hexo搭建"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Hexo搭建</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置Hexo"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">配置Hexo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后台运行"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">后台运行</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Hexo部署"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">Hexo部署</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#与Github-Page同步"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">与Github Page同步</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#DNS解析配置"><span class="post-toc-number">2.7.</span> <span class="post-toc-text">DNS解析配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置Https"><span class="post-toc-number">2.8.</span> <span class="post-toc-text">配置Https</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-在云服务器上搭建Hexo博客"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">在云服务器上搭建Hexo博客</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-10 16:49:00" datetime="2019-08-10T08:49:00.000Z"  itemprop="datePublished">2019-08-10</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>最近准备搭建一个自己的博客，历时一个星期的空余时间。搭建博客的主要目的是想记录自己的技术笔记和心得，方便跟人分享和自己查阅。很久以前我就有搭建博客的想法，但是没有实践，一个懒，一个没有找到合适的博客系统。后来发现有<code>Hexo</code>这个博客系统，但是看了一些教程，发现搭建起来很麻烦，我就又放弃了，最近在朋友的鼓励下，终于把想法实践了。</p>
+<p>在搭建博客之前，我对比我所知道两个博客系统，<code>WordPress</code>和<code>Hexo</code>。</p>
+<table>
+<thead>
+<tr>
+<th><strong>WordPress:</strong></th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>优点</strong></td>
+<td align="left"><strong>缺点</strong></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td>容易搭建，上手快</td>
+<td align="left">臃肿不轻便</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td>主题多</td>
+<td align="left">需要提供服务器和域名</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td>插件多</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>Hexo:</strong></th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>优点</strong></td>
+<td align="left"><strong>缺点</strong></td>
+<td align="left"></td>
+</tr>
+<tr>
+<td>轻便：全是静态文件</td>
+<td align="left">只能在本地电脑工作</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td>简洁：天然支持MarkDown</td>
+<td align="left">维护不便</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td>免费：GitHub</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>先前搭建过<code>WordPress</code>, 我并不是很喜欢<code>WordPress</code>的主题风格，个人认为不太适合写技术博客，找了些主题后，没有发现自己喜欢的。看到一些技术大佬很多在用<code>Hexo</code>的博客，并且对比了优缺点，最终决定搭建基于<code>Hexo</code>的博客。根据<code>Hexo</code>的缺点，我萌生了一个想法：能不能将Hexo搭建在云服务上？找了相关资料，确实有人这么做。本片博客主要解决了以下几个问题。</p>
+<ol>
+<li>在云服务器上搭建<code>Hexo</code>博客系统</li>
+<li>在线编辑和发布博客</li>
+<li>配置Https</li>
+</ol>
+<h1 id="博客搭建"><a href="#博客搭建" class="headerlink" title="博客搭建"></a>博客搭建</h1><h2 id="服务器和域名"><a href="#服务器和域名" class="headerlink" title="服务器和域名"></a>服务器和域名</h2><p>服务器是在<code>阿里云</code>上买的最低配置的香港服务器，因为香港服务器不需要备案就能直接访问，同时速度也不会太差。同时域名也是在<code>阿里云</code>上购买的。</p>
+<h3 id="服务器版本"><a href="#服务器版本" class="headerlink" title="服务器版本"></a>服务器版本</h3><p>CentOS 7.4</p>
+<h2 id="Hexo搭建"><a href="#Hexo搭建" class="headerlink" title="Hexo搭建"></a>Hexo搭建</h2><p>Hexo的搭建过程网上有太多，没必要重复造轮子，没搭建过的朋友可以参考<a href="https://www.cnblogs.com/liuxianan/p/build-blog-website-by-hexo-github.html#%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D" target="_blank" rel="noopener">这篇博文</a>。</p>
+<p>我的博客用的主题是<a href="https://github.com/yscoder/hexo-theme-indigo/wiki" target="_blank" rel="noopener">Indigo</a>,其中不少问题都可以在WiKi中找到。</p>
+<h2 id="配置Hexo"><a href="#配置Hexo" class="headerlink" title="配置Hexo"></a>配置Hexo</h2><p>在搭建完成之后，服务器的运行需要依赖于<code>hexo-server</code>和<code>hexo-admin</code>。如果已经安装，可以跳过此步骤。</p>
+<p>cd到博客根目录下，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-server@0.3.1 --save</span><br><span class="line">npm install hexo-admin@2.3.0 --save</span><br></pre></td></tr></table></figure>
+
+<p>安装完毕之后，执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>打开浏览器，访问<a href="http://yourServerIP:4000" target="_blank" rel="noopener">http://yourServerIP:4000</a>, 即可预览，访问<a href="http://yourServerIP:4000/admin" target="_blank" rel="noopener">http://yourServerIP:4000/admin</a>, 即可进入<code>hexo-admin</code>后台管理界面。</p>
+<p>hexo-admin默认是没有密码保护，需要自己手动开启。在进入后台管理页面时，点击<code>Settings--Setup authentification here</code>设置后台管理密码。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-6.png" alt="Setting" title>
+                </div>
+                <div class="image-caption">Setting</div>
+            </figure>
+
+<p>输入用户名密码之后，讲生成的代码复制</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-9.png" alt="Admin Config Section" title>
+                </div>
+                <div class="image-caption">Admin Config Section</div>
+            </figure>
+<p>然后打开博客根目录下的<code>_config.yml</code>，将复制的代码粘贴到末尾。<br>重启hexo服务器，进入<a href="http://yourServerIP:4000/admin，如果出现登录界面，则设置成功。" target="_blank" rel="noopener">http://yourServerIP:4000/admin，如果出现登录界面，则设置成功。</a></p>
+<h2 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h2><p>因为shell关掉或者使用<code>ctrl+c</code>关闭，则会导致服务器结束进程。所以我写了脚本，执行之后，后台会一直运行hexo服务器。<br>安装pm2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm  install -g pm2</span><br></pre></td></tr></table></figure>
+
+<p>在博客根目录下创建一个hexo_run.js。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; exec &#125; = <span class="built_in">require</span>(<span class="string">'child_process'</span>)</span><br><span class="line">exec(<span class="string">'hexo server'</span>,(error, stdout, stderr) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(error)&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'exec error: $&#123;error&#125;'</span>)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'stdout: $&#123;stdout&#125;'</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'stderr: $&#123;stderr&#125;'</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在根目录下运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 start hexo_run.js</span><br></pre></td></tr></table></figure>
+
+<p>这样hexo服务器就能一直在后台运行不会被杀死。</p>
+<h2 id="Hexo部署"><a href="#Hexo部署" class="headerlink" title="Hexo部署"></a>Hexo部署</h2><p>每次都用通过指令来部署，那是相当难受了。不过<code>hexo-admin</code>提供了部署的功能：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-11.png" alt="Deploy" title>
+                </div>
+                <div class="image-caption">Deploy</div>
+            </figure>
+<p>通过点击<code>Deploy</code>按钮就能执行你的部署脚本。在博客根目录下添加配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin:</span><br><span class="line">	deployCommand: &apos;./hexo-deploy.sh&apos;</span><br></pre></td></tr></table></figure>
+
+<p>并且在根目录下创建<code>hexo-deploy.sh</code>，并编辑：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env sh</span><br><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p>给hexo-deploy.sh授予权限：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+x hexo-deploy.sh</span><br></pre></td></tr></table></figure>
+
+<p>重启服务器之后，编辑博文后点击Deploy按钮就鞥讲文章渲染成html页面也访问了。</p>
+<h2 id="与Github-Page同步"><a href="#与Github-Page同步" class="headerlink" title="与Github Page同步"></a>与Github Page同步</h2><p>GitHub的配置可以参考前文中所提到的博客搭建文章，里面有详细的配置过程。如果需要与Github page同步，则修改<code>hexo-deploy.sh</code>就可以了。<br>修改如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/env sh</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
+
+<p>然后重启服务器，点击Deploy按钮即可，之后的改动都会同步到Github上。</p>
+<h2 id="DNS解析配置"><a href="#DNS解析配置" class="headerlink" title="DNS解析配置"></a>DNS解析配置</h2><p>进入域名的DNS解析中，按如下配置即可：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-13.png" alt="DNS解析" title>
+                </div>
+                <div class="image-caption">DNS解析</div>
+            </figure>
+
+<p>然后访问你的域名，查看是否能访问到博客页面。</p>
+<h2 id="配置Https"><a href="#配置Https" class="headerlink" title="配置Https"></a>配置Https</h2><p>关于Https的配置，可以参考<a href="https://www.jianshu.com/p/8046a12fec4a" target="_blank" rel="noopener">这篇博文</a>。<br>需要在阿里云购买云盾证书，并添加解析。在下载完解析之后需要在<code>nginx.conf</code>中配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">     listen       80;</span><br><span class="line">     server_name  www.itnote.tech;</span><br><span class="line">     return 301 https://www.itnote.tech$request_uri;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen       443 ssl;</span><br><span class="line">    server_name  www.itnote.tech;</span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate      /usr/local/nginx/cert/pem_file.pem;</span><br><span class="line">    ssl_certificate_key   /usr/local/nginx/cert/key_file.key;</span><br><span class="line">    ssl_session_cache    shared:SSL:1m;</span><br><span class="line">    ssl_session_timeout  5m;</span><br><span class="line">    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">    ssl_ciphers  HIGH:!aNULL:!MD5;</span><br><span class="line">    ssl_prefer_server_ciphers  on;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        # root   /home/hexo/public;</span><br><span class="line">        #index  index.html index.htm;</span><br><span class="line">         proxy_pass         http://localhost:4000/;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>保存后重启nginx服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service nginx restart</span><br></pre></td></tr></table></figure>
+
+<p>看上图中有锁状的地址即配置成功。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-15.png" alt="Https Cert" title>
+                </div>
+                <div class="image-caption">Https Cert</div>
+            </figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-08-10T11:47:05.042Z" itemprop="dateUpdated">2019-08-10 19:47:05</time>
+</span><br>
+
+
+        
+        <a href="/2019/08/10/在云服务器上搭建Hexo博客/" target="_blank" rel="external">http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://itnote.tech">
+            <img src="/img/avatar.jpg" alt="Shawn Peng">
+            Shawn Peng
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Https/">Https</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WordPress/">WordPress</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/博客/">博客</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/&title=《在云服务器上搭建Hexo博客》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/&title=《在云服务器上搭建Hexo博客》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《在云服务器上搭建Hexo博客》 — 南院大王&url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/08/10/hello-world/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Hello World</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "GlcXiFFsuW3fe7nQGfyzdIuI-MdYXbMMI",
+            appKey: "2wwcHmeOw1rxX5JaoYbnDuf3",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷请我吃猪蹄~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Shawn Peng &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/&title=《在云服务器上搭建Hexo博客》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/&title=《在云服务器上搭建Hexo博客》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《在云服务器上搭建Hexo博客》 — 南院大王&url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2019/08/10/在云服务器上搭建Hexo博客/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

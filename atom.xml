@@ -66,29 +66,4 @@
     
   </entry>
   
-  <entry>
-    <title>Hello, Hexo</title>
-    <link href="http://itnote.tech/2019/08/04/Hello-Hexo/"/>
-    <id>http://itnote.tech/2019/08/04/Hello-Hexo/</id>
-    <published>2019-08-04T12:37:00.000Z</published>
-    <updated>2019-08-08T00:37:48.485Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="This-is-my-first-article"><a href="#This-is-my-first-article" class="headerlink" title="This is my first article"></a>This is my first article</h1><hr><p>ahaaha</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;This-is-my-first-article&quot;&gt;&lt;a href=&quot;#This-is-my-first-article&quot; class=&quot;headerlink&quot; title=&quot;This is my first article&quot;&gt;&lt;/a&gt;This is my fir
-      
-    
-    </summary>
-    
-      <category term="CategoryTest" scheme="http://itnote.tech/categories/CategoryTest/"/>
-    
-    
-      <category term="Test" scheme="http://itnote.tech/tags/Test/"/>
-    
-  </entry>
-  
 </feed>

@@ -28,7 +28,7 @@ ga('send', 'pageview');
     
     
     
-    <title>南院大王 | 十年饮冰，难凉热血。</title>
+    <title>Tags: 算法 | 南院大王 | 十年饮冰，难凉热血。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
@@ -37,7 +37,7 @@ ga('send', 'pageview');
     <meta name="keywords" content>
     <meta property="og:type" content="website">
 <meta property="og:title" content="南院大王">
-<meta property="og:url" content="http://itnote.tech/index.html">
+<meta property="og:url" content="http://itnote.tech/tags/算法/index.html">
 <meta property="og:site_name" content="南院大王">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -90,7 +90,7 @@ ga('send', 'pageview');
     <div class="scroll-wrap flex-col">
       <ul class="nav">
         
-            <li class="waves-block waves-effect active">
+            <li class="waves-block waves-effect">
               <a href="/"  >
                 <i class="icon icon-lg icon-home"></i>
                 Home
@@ -104,7 +104,7 @@ ga('send', 'pageview');
               </a>
             </li>
         
-            <li class="waves-block waves-effect">
+            <li class="waves-block waves-effect active">
               <a href="/tags"  >
                 <i class="icon icon-lg icon-tags"></i>
                 Tags
@@ -136,7 +136,7 @@ ga('send', 'pageview');
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">南院大王</div>
+        <div class="flex-col header-title ellipsis">Tags: 算法</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -155,40 +155,72 @@ ga('send', 'pageview');
         
     </div>
 </header>
-<header class="content-header index-header">
+<header class="content-header tags-header">
 
     <div class="container fade-scale">
-        <h1 class="title">南院大王</h1>
+        <h1 class="title">Tags: 算法</h1>
         <h5 class="subtitle">
-            
-                十年饮冰，难凉热血。
             
         </h5>
     </div>
 
     
+<div class="tabs-bar container">
+    <nav class="tags-list">
+        <a href="/tags" style="-webkit-order:-1;order:-1" class="tags-list-item waves-effect waves-button waves-light
+            ">全部</a>
+        
+
+            <a href="/tags/博客/" style="-webkit-order:2;order:2" class="tags-list-item waves-effect waves-button waves-light">博客</a>
+
+        
+
+            <a href="/tags/Hexo/" style="-webkit-order:3;order:3" class="tags-list-item waves-effect waves-button waves-light">Hexo</a>
+
+        
+
+            <a href="/tags/Https/" style="-webkit-order:4;order:4" class="tags-list-item waves-effect waves-button waves-light">Https</a>
+
+        
+
+            <a href="/tags/WordPress/" style="-webkit-order:5;order:5" class="tags-list-item waves-effect waves-button waves-light">WordPress</a>
+
+        
+
+            <a href="/tags/LeetCode/" style="-webkit-order:0;order:0" class="tags-list-item waves-effect waves-button waves-light">LeetCode</a>
+
+        
+
+            <a href="/tags/算法/" style="-webkit-order:1;order:1" class="tags-list-item waves-effect waves-button waves-light active">算法</a>
+
+        
+    </nav>
+    <!-- PC show more-->
+    <div class="tags-list-more">
+        <a href="javascript:;" onclick="BLOG.tabBar(this)" class="action tags-list-item waves-effect waves-circle waves-light"><i class="icon icon-ellipsis-h"></i></a>
+    </div>
+</div>
+
 
 
 </header>
 
-<div class="container body-wrap">
-
-    <ul class="post-list">
+<div class="container body-wrap fade">
     
-        <li class="post-list-item fade">
-            <article id="post-LeetCode-两数相加"
-  class="article-card article-type-post" itemprop="blogPost">
+            <div class="waterfall">
+          
 
+            <div class="waterfall-item">
+  <article class="article-card archive-article">
     <div class="post-meta">
-        <time class="post-time" title="2019-08-16 18:11:00" datetime="2019-08-16T10:11:00.000Z"  itemprop="datePublished">2019-08-16</time>
+      <time class="post-time" title="2019-08-16 18:11:00" datetime="2019-08-16T10:11:00.000Z"  itemprop="datePublished">2019-08-16</time>
 
-        
+      
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/LeetCode/">LeetCode</a></li></ul>
 
 
 
     </div>
-
     
 
 
@@ -200,19 +232,6 @@ ga('send', 'pageview');
 
 
 
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        描述给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储一位 数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
-示例：
-123输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)输出：7 -&gt; 0 -&...
-    
-
-        <a href="/2019/08/16/LeetCode-两数相加/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
     
     <div class="post-footer">
         
@@ -220,103 +239,15 @@ ga('send', 'pageview');
 
     </div>
     
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-在云服务器上搭建Hexo博客"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-10 16:49:00" datetime="2019-08-10T08:49:00.000Z"  itemprop="datePublished">2019-08-10</time>
-
-        
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/博客/">博客</a></li></ul>
-
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2019/08/10/在云服务器上搭建Hexo博客/">如何在云服务器上搭建Hexo博客</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        前言最近搭建一个自己的博客，历时一个星期的空余时间。搭建博客的主要目的是想记录自己的技术笔记和心得，方便与人分享和自己查阅。很久以前我就有搭建博客的想法，但是没有实践，一个是懒，一个是没有找到合适的博客系统。后来发现Hexo这个博客系统，感觉不错，但是看了一些教程，感觉搭建起来很麻烦，我就又放弃了，最近在朋友的鼓励下，终于把想法实践了。
-在搭建博客之前，我对比了自己知道两个博客系统，Word...
-    
-
-        <a href="/2019/08/10/在云服务器上搭建Hexo博客/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-    <div class="post-footer">
-        
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Https/">Https</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WordPress/">WordPress</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/博客/">博客</a></li></ul>
-
-    </div>
-    
-</article>
-
-        </li>
-    
-        <li class="post-list-item fade">
-            <article id="post-hello-world"
-  class="article-card article-type-post" itemprop="blogPost">
-
-    <div class="post-meta">
-        <time class="post-time" title="2019-08-10 16:12:41" datetime="2019-08-10T08:12:41.000Z"  itemprop="datePublished">2019-08-10</time>
-
-        
-
-
-    </div>
-
-    
-
-
-  
-    <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2019/08/10/hello-world/">Hello World</a>
-    </h3>
-  
-
-
-
-
-    <div class="post-content" id="post-content" itemprop="postContent">
-
-    
-        Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Qu...
-    
-
-        <a href="/2019/08/10/hello-world/" class="post-more waves-effect waves-button">
-            阅读全文…
-        </a>
-    </div>
-    
-</article>
-
-        </li>
-    
-    </ul>
-
-    
-
+  </article>
 </div>
+
+        
+            </div>
+        
+    
+</div>
+
 
         <footer class="footer">
     <div class="top">
@@ -357,7 +288,7 @@ Qu...
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/&title=南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/tags/算法/&title=南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -367,22 +298,22 @@ Qu...
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/&title=南院大王&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/tags/算法/&title=南院大王&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/tags/算法/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=南院大王&url=http://itnote.tech/&via=http://itnote.tech" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=南院大王&url=http://itnote.tech/tags/算法/&via=http://itnote.tech" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/tags/算法/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -393,7 +324,7 @@ Qu...
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/tags/算法/" alt="微信分享二维码">
 </div>
 
 

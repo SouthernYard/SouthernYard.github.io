@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="QDE_X8xOqjR_NftZ0cJjE-Nqlzo6NV2BvAdy6ZN8EdA">
+    
+    
+    
+    <meta name="baidu-site-verification" content="nhGBgY9Y2Z">
+    
+    
+    
+    <title>刷票作弊脚本 | 南院大王 | 十年饮冰，难凉热血。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="爬虫">
+    <meta name="description" content="问题与分析问题最近有个朋友问我能不能帮我写个脚本投投票啊，我看今天有人一下子多了4万的投票，这肯定是作弊啊，你能不能帮帮我？我就很好奇这到底是咋回事。 分析于是我打开他给我的链接一看，非常简单的投票系统，就是发一个个的Get请求就可以了。">
+<meta name="keywords" content="爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="刷票作弊脚本">
+<meta property="og:url" content="http://itnote.tech/2019/11/08/刷票作弊脚本/index.html">
+<meta property="og:site_name" content="南院大王">
+<meta property="og:description" content="问题与分析问题最近有个朋友问我能不能帮我写个脚本投投票啊，我看今天有人一下子多了4万的投票，这肯定是作弊啊，你能不能帮帮我？我就很好奇这到底是咋回事。 分析于是我打开他给我的链接一看，非常简单的投票系统，就是发一个个的Get请求就可以了。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://itnote.tech/images/pasted-30.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-31.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-32.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-33.png">
+<meta property="og:updated_time" content="2019-11-08T05:29:29.197Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="刷票作弊脚本">
+<meta name="twitter:description" content="问题与分析问题最近有个朋友问我能不能帮我写个脚本投投票啊，我看今天有人一下子多了4万的投票，这肯定是作弊啊，你能不能帮帮我？我就很好奇这到底是咋回事。 分析于是我打开他给我的链接一看，非常简单的投票系统，就是发一个个的Get请求就可以了。">
+<meta name="twitter:image" content="http://itnote.tech/images/pasted-30.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <!-- baidu auto push -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+	</script>  
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Shawn Peng</h5>
+          <a href="mailto:shawnpeng@yeah.net" title="shawnpeng@yeah.net" class="mail">shawnpeng@yeah.net</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SouthernYard" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">刷票作弊脚本</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">刷票作弊脚本</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-08T04:32:00.000Z" itemprop="datePublished" class="page-time">
+  2019-11-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/爬虫/">爬虫</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#问题与分析"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题与分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">分析</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#获取IP资源"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">获取IP资源</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Coding"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Coding</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#源码"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">源码</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-刷票作弊脚本"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">刷票作弊脚本</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-08 12:32:00" datetime="2019-11-08T04:32:00.000Z"  itemprop="datePublished">2019-11-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/爬虫/">爬虫</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="问题与分析"><a href="#问题与分析" class="headerlink" title="问题与分析"></a>问题与分析</h1><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近有个朋友问我能不能帮我写个脚本投投票啊，我看今天有人一下子多了4万的投票，这肯定是作弊啊，你能不能帮帮我？我就很好奇这到底是咋回事。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>于是我打开他给我的链接一看，非常简单的投票系统，就是发一个个的Get请求就可以了。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-30.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>我看也挺简单，那我就直接写个python脚本去轮询跑就完事儿了，不过我也很谨慎，先用Postman做了最简单的测试，手动发了很多Get request，但是不一会儿问题来了。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-31.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>完蛋，得意太早，ip明显是被封了，需要让我输入验证码，此时我陷入了沉思。目前有两个问题需要解决：</p>
+<ol>
+<li>如果需要输入验证码，我该如何去解析呢？</li>
+<li>为何IP会被封呢？</li>
+</ol>
+<p>针对第一个问题，我首先想到的是拿到验证码的图片，然后通过开源软件库将验证码解析出来，然而万万没想到的是，这个验证是通过页面点击控件，JS代码触发Get请求生成的。这就让我很头疼了，因为意味着我很难拿到图片，即使可以，那也要通过UI的自动化框架去获取，通过点击控件，然后解析页面元素，很麻烦，而且稳定性不高。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-32.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>我又陷入了沉思。<br>不过既然单个IP会被封，那么我通过代理IP去投票呢？遇到验证码就换IP，这样是不是就可以规避这个问题了？不错，这是一个很好的解决办法。有了具体的方案之后，我开始代码的实施。</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="获取IP资源"><a href="#获取IP资源" class="headerlink" title="获取IP资源"></a>获取IP资源</h2><p>去网上花了5块钱买了两个IP资源，有效期一天，通过其API接口可以拿到有效的IP和端口号。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-33.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>下面是返回的服务器的IP和端口：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"code"</span>:<span class="number">200</span>,</span><br><span class="line">    <span class="attr">"success"</span>:<span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"data"</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">"ip"</span>:<span class="string">"115.213.103.48"</span>,</span><br><span class="line">            <span class="attr">"port"</span>:<span class="number">3000</span>,</span><br><span class="line">            <span class="attr">"during"</span>:<span class="number">2</span></span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"msg"</span>:<span class="string">"操作成功"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h2><p>每次请求，获取IP资源也是新的，所以我只要在投票有问题之后，更换IP即可, 只要拿到的结果是成功的，就把IP和端口号解析出来。如果中间出现了什么Exception,那就休息一会，重新更换IP，主要是IP服务商的响应不及时，会有一些错误信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getHttpServer</span><span class="params">(self, url)</span>:</span></span><br><span class="line"></span><br><span class="line">    res = requests.get(url, timeout=<span class="number">4</span>)</span><br><span class="line">    res.encoding = <span class="string">'gb2312'</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        rep_dict = json.loads(res.content.decode())</span><br><span class="line">        <span class="keyword">if</span> rep_dict[<span class="string">'success'</span>] <span class="keyword">and</span> rep_dict[<span class="string">'code'</span>] == <span class="number">200</span>:</span><br><span class="line">            ip = rep_dict[<span class="string">'data'</span>][<span class="number">0</span>][<span class="string">'ip'</span>]</span><br><span class="line">            port = rep_dict[<span class="string">'data'</span>][<span class="number">0</span>][<span class="string">'port'</span>]</span><br><span class="line">            <span class="keyword">return</span> <span class="string">f"<span class="subst">&#123;ip&#125;</span>:<span class="subst">&#123;port&#125;</span>"</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">"换IP，休息5秒"</span>)</span><br><span class="line">        time.sleep(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<p>下面的代码中我隐去了API信息，但是不逻辑。主要的逻辑是通过代理IP不断地区发送请求，将票数和排名打印出来，如果排名到了第三名，那么投票的票数就够了，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vote</span><span class="params">(self, url_get_ip)</span>:</span></span><br><span class="line">    url = <span class="string">'vote request url'</span></span><br><span class="line">    s = requests.Session()</span><br><span class="line">    ip_port = self.getHttpServer(url_get_ip)</span><br><span class="line">    <span class="keyword">if</span> ip_port:</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                time.sleep(<span class="number">2</span>)</span><br><span class="line">                proxies = &#123;</span><br><span class="line">                    <span class="string">"http"</span>: <span class="string">"http://&#123;&#125;"</span>.format(ip_port), <span class="string">"https"</span>: <span class="string">"https://&#123;&#125;"</span>.format(ip_port)</span><br><span class="line">                &#125;</span><br><span class="line">                res = s.get(url, headers=self.headers, proxies=proxies, timeout=<span class="number">10</span>)</span><br><span class="line">                res.encoding = <span class="string">'gb2312'</span></span><br><span class="line">                rep_dict = json.loads(res.content.decode())</span><br><span class="line">                print(<span class="string">f"票数:<span class="subst">&#123;rep_dict[<span class="string">'data'</span>][<span class="string">'count'</span>]&#125;</span> ===&gt; 排名: <span class="subst">&#123;rep_dict[<span class="string">'data'</span>][<span class="string">'rank'</span>]&#125;</span>"</span>)</span><br><span class="line">                <span class="keyword">if</span> rep_dict[<span class="string">'data'</span>][<span class="string">'rank'</span>] == <span class="number">3</span>:</span><br><span class="line">                    self.not_enough = <span class="literal">False</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">if</span> rep_dict[<span class="string">'data'</span>][<span class="string">'msg'</span>] == <span class="string">'need_captcha'</span>:</span><br><span class="line">                    print(<span class="string">'验证码校验，准备换IP'</span>)</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            <span class="keyword">except</span>:</span><br><span class="line">                print(<span class="string">'投票有点小问题，pass'</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<p>到目前为止，已经刷到前5名了，因为刷得太快，现在已经停止，虽然里面好多人也这么做，心知肚明，但是还是不要相互拆穿好了。这篇文章的目的不是说做什么偏门作弊的东西，只是个人的一种尝试，我觉很有意思，就记下来了。</p>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><p>仅供学习和参考：<br><a href="https://github.com/SouthernYard/vote" target="_blank" rel="noopener">https://github.com/SouthernYard/vote</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-11-08T05:29:29.197Z" itemprop="dateUpdated">2019-11-08 13:29:29</time>
+</span><br>
+
+
+        
+        <a href="/2019/11/08/刷票作弊脚本/" target="_blank" rel="external">http://itnote.tech/2019/11/08/刷票作弊脚本/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://itnote.tech">
+            <img src="/img/avatar.jpg" alt="Shawn Peng">
+            Shawn Peng
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2019/11/08/刷票作弊脚本/&title=《刷票作弊脚本》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2019/11/08/刷票作弊脚本/&title=《刷票作弊脚本》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2019/11/08/刷票作弊脚本/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《刷票作弊脚本》 — 南院大王&url=http://itnote.tech/2019/11/08/刷票作弊脚本/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2019/11/08/刷票作弊脚本/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/11/01/最近的想法/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">最近的一些想法</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "GlcXiFFsuW3fe7nQGfyzdIuI-MdYXbMMI",
+            appKey: "2wwcHmeOw1rxX5JaoYbnDuf3",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷请我吃猪蹄~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Shawn Peng &copy; 2015 - 2019</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2019/11/08/刷票作弊脚本/&title=《刷票作弊脚本》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2019/11/08/刷票作弊脚本/&title=《刷票作弊脚本》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2019/11/08/刷票作弊脚本/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《刷票作弊脚本》 — 南院大王&url=http://itnote.tech/2019/11/08/刷票作弊脚本/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2019/11/08/刷票作弊脚本/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2019/11/08/刷票作弊脚本/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

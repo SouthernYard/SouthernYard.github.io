@@ -28,28 +28,29 @@ ga('send', 'pageview');
     
     
     
-    <title>常用正则表达式 | 南院大王 | 十年饮冰，难凉热血。</title>
+    <title>删除列表元素重新定位问题 | 南院大王 | 十年饮冰，难凉热血。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="正则表达式">
-    <meta name="description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：( -&amp;gt; )(.*)找到” -&amp;gt; “之后的字符串，例如：                                                                                               例图                匹配某一个段字符：”.*?”找到”中间的字符串。">
-<meta name="keywords" content="正则表达式">
+    <meta name="keywords" content="算法">
+    <meta name="description" content="问题最近碰到一个小问题, 需要在删除某个元素之后, 页面元素定位到上一个元素. 涉及的问题具体如下. 删除顶层元素, 需要定位到下面的元素.例如删除4,定位到3.                                                                                                             删除中间的元素, 需">
+<meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常用正则表达式">
-<meta property="og:url" content="http://itnote.tech/2020/01/18/正则表达式常用总结/index.html">
+<meta property="og:title" content="删除列表元素重新定位问题">
+<meta property="og:url" content="http://itnote.tech/2020/01/31/删除元素重新排序问题/index.html">
 <meta property="og:site_name" content="南院大王">
-<meta property="og:description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：( -&amp;gt; )(.*)找到” -&amp;gt; “之后的字符串，例如：                                                                                               例图                匹配某一个段字符：”.*?”找到”中间的字符串。">
+<meta property="og:description" content="问题最近碰到一个小问题, 需要在删除某个元素之后, 页面元素定位到上一个元素. 涉及的问题具体如下. 删除顶层元素, 需要定位到下面的元素.例如删除4,定位到3.                                                                                                             删除中间的元素, 需">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://itnote.tech/images/pasted-38.png">
-<meta property="og:image" content="http://itnote.tech/images/pasted-40.png">
-<meta property="og:updated_time" content="2020-01-19T15:14:59.975Z">
+<meta property="og:image" content="http://itnote.tech/images/pasted-42.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-46.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-47.png">
+<meta property="og:updated_time" content="2020-01-31T06:13:24.741Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用正则表达式">
-<meta name="twitter:description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：( -&amp;gt; )(.*)找到” -&amp;gt; “之后的字符串，例如：                                                                                               例图                匹配某一个段字符：”.*?”找到”中间的字符串。">
-<meta name="twitter:image" content="http://itnote.tech/images/pasted-38.png">
+<meta name="twitter:title" content="删除列表元素重新定位问题">
+<meta name="twitter:description" content="问题最近碰到一个小问题, 需要在删除某个元素之后, 页面元素定位到上一个元素. 涉及的问题具体如下. 删除顶层元素, 需要定位到下面的元素.例如删除4,定位到3.                                                                                                             删除中间的元素, 需">
+<meta name="twitter:image" content="http://itnote.tech/images/pasted-42.png">
     
         <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
     
@@ -144,7 +145,7 @@ ga('send', 'pageview');
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">常用正则表达式</div>
+        <div class="flex-col header-title ellipsis">删除列表元素重新定位问题</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -166,15 +167,13 @@ ga('send', 'pageview');
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">常用正则表达式</h1>
+        <h1 class="title">删除列表元素重新定位问题</h1>
         <h5 class="subtitle">
             
-                <time datetime="2020-01-18T12:07:00.000Z" itemprop="datePublished" class="page-time">
-  2020-01-18
+                <time datetime="2020-01-31T05:25:00.000Z" itemprop="datePublished" class="page-time">
+  2020-01-31
 </time>
 
-
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/问题总结/">问题总结</a></li></ul>
 
             
         </h5>
@@ -191,22 +190,20 @@ ga('send', 'pageview');
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#总结自己常用的正则表达值"><span class="post-toc-number">1.</span> <span class="post-toc-text">总结自己常用的正则表达值</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">分析</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-正则表达式常用总结"
+<article id="post-删除元素重新排序问题"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">常用正则表达式</h1>
+        <h1 class="post-card-title">删除列表元素重新定位问题</h1>
         <div class="post-meta">
-            <time class="post-time" title="2020-01-18 20:07:00" datetime="2020-01-18T12:07:00.000Z"  itemprop="datePublished">2020-01-18</time>
+            <time class="post-time" title="2020-01-31 13:25:00" datetime="2020-01-31T05:25:00.000Z"  itemprop="datePublished">2020-01-31</time>
 
             
-	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/问题总结/">问题总结</a></li></ul>
-
 
 
             
@@ -217,28 +214,35 @@ ga('send', 'pageview');
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="总结自己常用的正则表达值"><a href="#总结自己常用的正则表达值" class="headerlink" title="总结自己常用的正则表达值"></a>总结自己常用的正则表达值</h1><ol>
-<li>找到某个字符之后的字符串：( -&gt; )(.*)<br>找到” -&gt; “之后的字符串，例如：</li>
-</ol>
+            <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近碰到一个小问题, 需要在删除某个元素之后, 页面元素定位到上一个元素. 涉及的问题具体如下.</p>
+<p>删除顶层元素, 需要定位到下面的元素.例如删除4,定位到3.</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/images/pasted-38.png" alt="例图" title>
-                </div>
-                <div class="image-caption">例图</div>
-            </figure>
-
-<ol start="2">
-<li>匹配某一个段字符：”.*?”<br>找到”中间的字符串。</li>
-</ol>
-<figure class="image-bubble">
-                <div class="img-lightbox">
-                    <div class="overlay"></div>
-                    <img src="/images/pasted-40.png" alt title>
+                    <img src="/images/pasted-42.png" alt title>
                 </div>
                 <div class="image-caption"></div>
             </figure>
 
+<p>删除中间的元素, 需要定位到上面的元素.删除3, 定位到4.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-46.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>只有一个元素的时候, 删除并返回空.</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-47.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>在问题中已经列举了常见情况和边界情况, 所以需要对边界问题做一些处理.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Reorder page display list</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> idList: 整个id列表(0,1,2,3,4)</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> locatedId:需要删除的id, 如3.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">getNewLocatedId</span><span class="params">(List&lt;String&gt; idList, String locatedId)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 列表遍历计数</span></span><br><span class="line">  <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (String id : idList) &#123;</span><br><span class="line">    <span class="keyword">if</span> (id.equals(locatedId)) &#123;</span><br><span class="line">      <span class="comment">// 找到id并记下是索引号</span></span><br><span class="line">      <span class="keyword">int</span> index = count;</span><br><span class="line">      <span class="comment">// 特殊情况处理, 遇到尾部元素, 需要取上一个元素</span></span><br><span class="line">      <span class="comment">// 常用情况处理, 取下一个元素</span></span><br><span class="line">      index = (index == idList.size() - <span class="number">1</span>) ? index - <span class="number">1</span> : index + <span class="number">1</span>;</span><br><span class="line">      <span class="comment">// index是-1的情况,必然是只有一个元素并且被删除, 所以返回空字符串.</span></span><br><span class="line">      <span class="keyword">return</span> (index != -<span class="number">1</span>) ? idList.get(index) : <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    count++;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 找不到，返回空字符串</span></span><br><span class="line">  <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -246,12 +250,12 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-01-19T15:14:59.975Z" itemprop="dateUpdated">2020-01-19 23:14:59</time>
+    最后更新时间：<time datetime="2020-01-31T06:13:24.741Z" itemprop="dateUpdated">2020-01-31 14:13:24</time>
 </span><br>
 
 
         
-        <a href="/2020/01/18/正则表达式常用总结/" target="_blank" rel="external">http://itnote.tech/2020/01/18/正则表达式常用总结/</a>
+        <a href="/2020/01/31/删除元素重新排序问题/" target="_blank" rel="external">http://itnote.tech/2020/01/31/删除元素重新排序问题/</a>
         
     </div>
     
@@ -272,7 +276,7 @@ ga('send', 'pageview');
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/正则表达式/">正则表达式</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
 
             
@@ -282,7 +286,7 @@ ga('send', 'pageview');
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/01/18/正则表达式常用总结/&title=《常用正则表达式》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/01/31/删除元素重新排序问题/&title=《删除列表元素重新定位问题》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -292,22 +296,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/01/18/正则表达式常用总结/&title=《常用正则表达式》 — 南院大王&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/01/31/删除元素重新排序问题/&title=《删除列表元素重新定位问题》 — 南院大王&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/01/18/正则表达式常用总结/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/01/31/删除元素重新排序问题/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《常用正则表达式》 — 南院大王&url=http://itnote.tech/2020/01/18/正则表达式常用总结/&via=http://itnote.tech" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《删除列表元素重新定位问题》 — 南院大王&url=http://itnote.tech/2020/01/31/删除元素重新排序问题/&via=http://itnote.tech" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/01/18/正则表达式常用总结/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/01/31/删除元素重新排序问题/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -327,21 +331,14 @@ ga('send', 'pageview');
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2020/01/29/问题解决-显示中文乱码问题/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">BufferedReader解决中文显示乱码问题</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2019/11/08/刷票作弊脚本/" id="post-next" class="post-nav-link">
+      <a href="/2020/01/29/问题解决-显示中文乱码问题/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">刷票作弊脚本</h4>
+        <h4 class="title">BufferedReader解决中文显示乱码问题</h4>
       </a>
     </div>
   
@@ -465,7 +462,7 @@ ga('send', 'pageview');
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/01/18/正则表达式常用总结/&title=《常用正则表达式》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/01/31/删除元素重新排序问题/&title=《删除列表元素重新定位问题》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -475,22 +472,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/01/18/正则表达式常用总结/&title=《常用正则表达式》 — 南院大王&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/01/31/删除元素重新排序问题/&title=《删除列表元素重新定位问题》 — 南院大王&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/01/18/正则表达式常用总结/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/01/31/删除元素重新排序问题/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《常用正则表达式》 — 南院大王&url=http://itnote.tech/2020/01/18/正则表达式常用总结/&via=http://itnote.tech" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《删除列表元素重新定位问题》 — 南院大王&url=http://itnote.tech/2020/01/31/删除元素重新排序问题/&via=http://itnote.tech" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/01/18/正则表达式常用总结/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/01/31/删除元素重新排序问题/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -501,7 +498,7 @@ ga('send', 'pageview');
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2020/01/18/正则表达式常用总结/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2020/01/31/删除元素重新排序问题/" alt="微信分享二维码">
 </div>
 
 

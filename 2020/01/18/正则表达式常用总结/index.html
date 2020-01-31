@@ -35,20 +35,21 @@ ga('send', 'pageview');
     
     
     <meta name="keywords" content="正则表达式">
-    <meta name="description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：( -&amp;gt; )(.*)找到” -&amp;gt; “之后的字符串，例如：                                                                                               例图                匹配某一个段字符：”.*?”找到”中间的字符串。">
+    <meta name="description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：1( -&amp;gt; )(.*)    找到” -&amp;gt; “之后的字符串，例如：                                                                                              例图                匹配某一个段字符：1&amp;quot;.*?&amp;quo">
 <meta name="keywords" content="正则表达式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常用正则表达式">
 <meta property="og:url" content="http://itnote.tech/2020/01/18/正则表达式常用总结/index.html">
 <meta property="og:site_name" content="南院大王">
-<meta property="og:description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：( -&amp;gt; )(.*)找到” -&amp;gt; “之后的字符串，例如：                                                                                               例图                匹配某一个段字符：”.*?”找到”中间的字符串。">
+<meta property="og:description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：1( -&amp;gt; )(.*)    找到” -&amp;gt; “之后的字符串，例如：                                                                                              例图                匹配某一个段字符：1&amp;quot;.*?&amp;quo">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://itnote.tech/images/pasted-38.png">
 <meta property="og:image" content="http://itnote.tech/images/pasted-40.png">
-<meta property="og:updated_time" content="2020-01-19T15:14:59.975Z">
+<meta property="og:image" content="http://itnote.tech/images/pasted-48.png">
+<meta property="og:updated_time" content="2020-01-31T09:22:27.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用正则表达式">
-<meta name="twitter:description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：( -&amp;gt; )(.*)找到” -&amp;gt; “之后的字符串，例如：                                                                                               例图                匹配某一个段字符：”.*?”找到”中间的字符串。">
+<meta name="twitter:description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：1( -&amp;gt; )(.*)    找到” -&amp;gt; “之后的字符串，例如：                                                                                              例图                匹配某一个段字符：1&amp;quot;.*?&amp;quo">
 <meta name="twitter:image" content="http://itnote.tech/images/pasted-38.png">
     
         <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
@@ -217,9 +218,12 @@ ga('send', 'pageview');
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="总结自己常用的正则表达值"><a href="#总结自己常用的正则表达值" class="headerlink" title="总结自己常用的正则表达值"></a>总结自己常用的正则表达值</h1><ol>
-<li>找到某个字符之后的字符串：( -&gt; )(.*)<br>找到” -&gt; “之后的字符串，例如：</li>
-</ol>
+            <h1 id="总结自己常用的正则表达值"><a href="#总结自己常用的正则表达值" class="headerlink" title="总结自己常用的正则表达值"></a>总结自己常用的正则表达值</h1><ul>
+<li>找到某个字符之后的字符串：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">( -&gt; )(.*)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>找到” -&gt; “之后的字符串，例如：</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -228,9 +232,12 @@ ga('send', 'pageview');
                 <div class="image-caption">例图</div>
             </figure>
 
-<ol start="2">
-<li>匹配某一个段字符：”.*?”<br>找到”中间的字符串。</li>
-</ol>
+<ul>
+<li>匹配某一个段字符：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;.*?&quot;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>找到”中间的字符串。</p>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
@@ -239,6 +246,21 @@ ga('send', 'pageview');
                 <div class="image-caption"></div>
             </figure>
 
+<ul>
+<li>匹配数字: <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-?[0-9]+.*[0-9]*</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>判断当前字符串是不是数字:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isNumeric</span><span class="params">(String str)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str.matches(<span class="string">"-?[0-9]+.*[0-9]*"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-48.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
         </div>
 
         <blockquote class="post-copyright">
@@ -246,7 +268,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-01-19T15:14:59.975Z" itemprop="dateUpdated">2020-01-19 23:14:59</time>
+    最后更新时间：<time datetime="2020-01-31T09:22:27.487Z" itemprop="dateUpdated">2020-01-31 17:22:27</time>
 </span><br>
 
 

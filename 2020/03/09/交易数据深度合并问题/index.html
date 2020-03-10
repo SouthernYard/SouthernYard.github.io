@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="QDE_X8xOqjR_NftZ0cJjE-Nqlzo6NV2BvAdy6ZN8EdA">
+    
+    
+    
+    <meta name="baidu-site-verification" content="nhGBgY9Y2Z">
+    
+    
+    
+    <title>盘口数据深度合并问题 | 南院大王 | 十年饮冰，难凉热血。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="算法">
+    <meta name="description" content="问题看到一些股票数据或者数字货币的市场交易深度数据, 不同的价位, 交易的数量不同. 因为买价和卖价精度问题, 这就导致了市场深度可以非常深, 如下图所示:                                                                                                             这是一个火币网数字货币市场">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="盘口数据深度合并问题">
+<meta property="og:url" content="http://itnote.tech/2020/03/09/交易数据深度合并问题/index.html">
+<meta property="og:site_name" content="南院大王">
+<meta property="og:description" content="问题看到一些股票数据或者数字货币的市场交易深度数据, 不同的价位, 交易的数量不同. 因为买价和卖价精度问题, 这就导致了市场深度可以非常深, 如下图所示:                                                                                                             这是一个火币网数字货币市场">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://itnote.tech/images/pasted-52.png">
+<meta property="og:updated_time" content="2020-03-10T04:03:55.067Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="盘口数据深度合并问题">
+<meta name="twitter:description" content="问题看到一些股票数据或者数字货币的市场交易深度数据, 不同的价位, 交易的数量不同. 因为买价和卖价精度问题, 这就导致了市场深度可以非常深, 如下图所示:                                                                                                             这是一个火币网数字货币市场">
+<meta name="twitter:image" content="http://itnote.tech/images/pasted-52.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <!-- baidu auto push -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+	</script>  
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Shawn Peng</h5>
+          <a href="mailto:shawnpeng@yeah.net" title="shawnpeng@yeah.net" class="mail">shawnpeng@yeah.net</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SouthernYard" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">盘口数据深度合并问题</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">盘口数据深度合并问题</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-08T19:08:00.000Z" itemprop="datePublished" class="page-time">
+  2020-03-09
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#问题"><span class="post-toc-number">1.</span> <span class="post-toc-text">问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求"><span class="post-toc-number">2.</span> <span class="post-toc-text">需求</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#算法"><span class="post-toc-number">3.</span> <span class="post-toc-text">算法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-交易数据深度合并问题"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">盘口数据深度合并问题</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-09 03:08:00" datetime="2020-03-08T19:08:00.000Z"  itemprop="datePublished">2020-03-09</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/算法/">算法</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>看到一些股票数据或者数字货币的市场交易深度数据, 不同的价位, 交易的数量不同. 因为买价和卖价精度问题, 这就导致了市场深度可以非常深, 如下图所示:</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-52.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<p>这是一个火币网数字货币市场交易深度的示例图, 在页面上能看到100个深度, 实际在Rest API请求数据的时候,返回的市场深度可以是150个. 当然, 有些官网也可以返回深度合并的数据. 所以我在遇到这个问题的时候, 走了一点弯路, 实现了这个小的算法问题.</p>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>对于盘口数据,买单向下合并，卖单向上合并. 同时, 合并的时候就遇到了几个问题需要解决.</p>
+<ol>
+<li>合并的精度问题</li>
+<li>相同深度订单数量计算</li>
+</ol>
+<h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>我找到了API文档中的ask,bid数据作为样本.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;bids&quot;: [</span><br><span class="line">  [3.7721, 344.86],// [price, quote volume]</span><br><span class="line">  [3.7709, 46.66] </span><br><span class="line">],</span><br><span class="line">&quot;asks&quot;: [</span><br><span class="line">  [3.7745, 15.44],</span><br><span class="line">  [3.7746, 70.52]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>在数据样本中, bids是一个二维数组, 第一列是该深度的价格, 第二列是该深度的订单数量.<br>首先解决第一个问题, 如何解决合并深度问题:<br>比如卖单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[3.1225, 7],</span><br><span class="line">[3.1229, 1],</span><br><span class="line">[3.1231, 3],</span><br><span class="line">[3.1232, 5],</span><br><span class="line">[3.1233, 2],</span><br><span class="line">[3.1234, 1]</span><br></pre></td></tr></table></figure>
+
+<p>对于上面的数据, 合并最后一位价格精度, 那深度数据是如何呢? 应该是这样的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[3.123, 8],</span><br><span class="line">[3.124, 11]</span><br></pre></td></tr></table></figure>
+
+<p>如果合并最后两位呢? 应该如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[3.13, 19]</span><br></pre></td></tr></table></figure>
+
+<p>可以看到算法如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> number: 价格</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> precision： 精度</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span>： 向上合并后的价格</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getCeilByLastNumber</span><span class="params">(<span class="keyword">float</span> number, <span class="keyword">int</span> precision)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 精度小于0，直接返回， 不做精度计算</span></span><br><span class="line">  <span class="keyword">if</span> (precision &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> number;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 计算小数点后有几位</span></span><br><span class="line">  <span class="keyword">int</span> numberLengthAfterPoint = <span class="number">0</span>;</span><br><span class="line">  <span class="comment">// 临时变量</span></span><br><span class="line">  <span class="keyword">float</span> tempNum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (number &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 这一步的目的是为了方式0.0015这种数， 会出现1.5E-3这种科学计数法</span></span><br><span class="line">    tempNum = number + <span class="number">1</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 同上</span></span><br><span class="line">    tempNum = number - <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 获取number的字符串表达</span></span><br><span class="line">  String numStr = tempNum + <span class="string">""</span>;</span><br><span class="line">  <span class="comment">// 以小数点分割，第二个数组元素即小数点后的数字</span></span><br><span class="line">  String[] numStrArray = numStr.split(<span class="string">"\\."</span>);</span><br><span class="line">  <span class="comment">// 得到小数点后数字的长度</span></span><br><span class="line">  numberLengthAfterPoint = numStrArray[<span class="number">1</span>].length();</span><br><span class="line">  <span class="keyword">if</span> (numberLengthAfterPoint &gt;= precision) &#123;</span><br><span class="line">    <span class="comment">// 向上取数</span></span><br><span class="line">    <span class="keyword">return</span> getCeilNumberWithPrecision(number, numberLengthAfterPoint - precision + <span class="number">1</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> number;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getCeilNumberWithPrecision</span><span class="params">(<span class="keyword">float</span> number, <span class="keyword">int</span> precision)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (<span class="keyword">float</span>) (Math.ceil(number * ((<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, precision))) / (((<span class="keyword">int</span>) Math.pow(<span class="number">10</span>, precision)) * <span class="number">1.0f</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理, 对于向下合并也是类似的.</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-03-10T04:03:55.067Z" itemprop="dateUpdated">2020-03-10 12:03:55</time>
+</span><br>
+
+
+        
+        <a href="/2020/03/09/交易数据深度合并问题/" target="_blank" rel="external">http://itnote.tech/2020/03/09/交易数据深度合并问题/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://itnote.tech">
+            <img src="/img/avatar.jpg" alt="Shawn Peng">
+            Shawn Peng
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/03/09/交易数据深度合并问题/&title=《盘口数据深度合并问题》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/03/09/交易数据深度合并问题/&title=《盘口数据深度合并问题》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/03/09/交易数据深度合并问题/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《盘口数据深度合并问题》 — 南院大王&url=http://itnote.tech/2020/03/09/交易数据深度合并问题/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/03/09/交易数据深度合并问题/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/02/09/用EChart图表进行数据显示/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">用EChart图表进行数据显示</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "GlcXiFFsuW3fe7nQGfyzdIuI-MdYXbMMI",
+            appKey: "2wwcHmeOw1rxX5JaoYbnDuf3",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷请我吃猪蹄~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Shawn Peng &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/03/09/交易数据深度合并问题/&title=《盘口数据深度合并问题》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/03/09/交易数据深度合并问题/&title=《盘口数据深度合并问题》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/03/09/交易数据深度合并问题/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《盘口数据深度合并问题》 — 南院大王&url=http://itnote.tech/2020/03/09/交易数据深度合并问题/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/03/09/交易数据深度合并问题/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2020/03/09/交易数据深度合并问题/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

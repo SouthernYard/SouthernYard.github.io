@@ -46,7 +46,7 @@ ga('send', 'pageview');
 <meta property="og:image" content="http://itnote.tech/images/pasted-38.png">
 <meta property="og:image" content="http://itnote.tech/images/pasted-40.png">
 <meta property="og:image" content="http://itnote.tech/images/pasted-48.png">
-<meta property="og:updated_time" content="2020-01-31T09:22:27.487Z">
+<meta property="og:updated_time" content="2020-03-28T13:55:51.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用正则表达式">
 <meta name="twitter:description" content="总结自己常用的正则表达值 找到某个字符之后的字符串：1( -&amp;gt; )(.*)    找到” -&amp;gt; “之后的字符串，例如：                                                                                              例图                匹配某一个段字符：1&amp;quot;.*?&amp;quo">
@@ -261,6 +261,18 @@ ga('send', 'pageview');
                 </div>
                 <div class="image-caption"></div>
             </figure>
+
+<ul>
+<li>匹配空行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(\s*)\r\n</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>匹配不想包含某些字符串的行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^((?!不想包含的字符串).)*$</span><br></pre></td></tr></table></figure>
+
+
         </div>
 
         <blockquote class="post-copyright">
@@ -268,7 +280,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-01-31T09:22:27.487Z" itemprop="dateUpdated">2020-01-31 17:22:27</time>
+    最后更新时间：<time datetime="2020-03-28T13:55:51.162Z" itemprop="dateUpdated">2020-03-28 21:55:51</time>
 </span><br>
 
 

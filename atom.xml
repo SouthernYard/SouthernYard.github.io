@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://itnote.tech/"/>
-  <updated>2020-05-19T14:03:20.365Z</updated>
+  <updated>2020-06-13T15:12:16.976Z</updated>
   <id>http://itnote.tech/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>HTTP和WebSocket的代理设置</title>
+    <link href="http://itnote.tech/2020/06/13/Java%E5%B7%A5%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE/"/>
+    <id>http://itnote.tech/2020/06/13/Java工程中的代理设置/</id>
+    <published>2020-06-13T14:45:00.000Z</published>
+    <updated>2020-06-13T15:12:16.976Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>最近在项目工程实施的过程中，需要使项目可以获取一些信息，于是想到如何通过代理获取。</p><h1 id="问题点"><a href="#问题点" class="headerlink" title="问题点"></a>问题点</h1><ol><li>如何能够使所有的web请求的时候都走代理呢？</li></ol><h1 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h1><ol><li>能否让自己的所有软件都走代理？<br> -可行，只要软件可以设置代理。</li><li>如果1可行，是否可以让Intellij走代理？<br> -可行，但是无法让Web工程全部走代理。 <figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/pasted-53.png" alt title>                </div>                <div class="image-caption"></div>            </figure></li><li>既然2不可行，能否让JVM走代理。<br> -不知道，没找到方案。</li><li>那是否可以让HTTP请求走代理？<br> -可行，在创建RestTemplate对象的时候设置Proxy</li><li>WebSocket是否可行？<br> -可行，在创建WebSocket的时候设置Proxy即可。</li></ol><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>根据4,5点，可以在创建<code>RestTemplate</code>对象和<code>WebSocketClient</code>对象时候，设置代理即可。<br>以下的<code>MyRestApi</code>继承了<code>RestTemplate</code>父类，在构造对象的时候设置了代理。本地代理使用的是<code>SOCK5</code>协议，所以在获取<code>Proxy</code>的时候，使用的是<code>SOCKS</code>。在<code>Prxoy</code>类中，默认情况下使用的是直连，即<code>DIRECT</code>，而此处用的是<code>SOCKS</code>，如果你的有设置<code>HTTP</code>代理，代码中使用<code>HTTP</code>应该也可以。</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/pasted-54.png" alt title>                </div>                <div class="image-caption"></div>            </figure><h2 id="HTTP请求"><a href="#HTTP请求" class="headerlink" title="HTTP请求"></a>HTTP请求</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">MyRestApi</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  SimpleClientHttpRequestFactory factory = <span class="keyword">new</span> SimpleClientHttpRequestFactory();</span><br><span class="line">  Proxy proxy = ProxyUtil.getProxy();</span><br><span class="line">  factory.setProxy(proxy);</span><br><span class="line">  factory.setConnectTimeout(<span class="number">3000</span>);</span><br><span class="line">  factory.setReadTimeout(<span class="number">3000</span>);</span><br><span class="line">  <span class="keyword">super</span>.setRequestFactory(factory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class ProxyUtil &#123;</span><br><span class="line">  @NotNull</span><br><span class="line">  public static Proxy getProxy() &#123;</span><br><span class="line">    return new Proxy(Proxy.Type.SOCKS, new InetSocketAddress(&quot;127.0.0.1&quot;, 1234));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">此处1234是SOCKS的代理端口。</span><br></pre></td></tr></table></figure><h2 id="WebSocket"><a href="#WebSocket" class="headerlink" title="WebSocket"></a>WebSocket</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public MyWebSocketApiBase(String uri, BaseGateway gateway) throws URISyntaxException &#123;</span><br><span class="line">  super(new URI(uri), new Draft_6455());</span><br><span class="line">  super.setProxy(ProxyUtil.getProxy());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;最近在项目工程实施的过程中，需要使项目可以获取一些信息，于是想到如何通过代理获取。&lt;/p&gt;
+&lt;h1 id=&quot;问题点&quot;&gt;&lt;a href=&quot;#问
+      
+    
+    </summary>
+    
+      <category term="代理" scheme="http://itnote.tech/categories/%E4%BB%A3%E7%90%86/"/>
+    
+    
+      <category term="代理" scheme="http://itnote.tech/tags/%E4%BB%A3%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>对人生意义的思考</title>

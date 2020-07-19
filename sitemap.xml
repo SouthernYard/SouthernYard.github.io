@@ -2,9 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itnote.tech/2020/07/19/Linux%E4%B8%8BCPU%E7%BB%91%E5%AE%9A%E7%BA%BF%E7%A8%8B/</loc>
+    
+    <lastmod>2020-07-19T15:06:10.123Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/2019/11/06/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%99%A8%EF%BC%88%E8%AE%A2%E9%98%85-%E5%8F%91%E5%B8%83%E6%A8%A1%E5%BC%8F%EF%BC%89%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
+    
+    <lastmod>2020-06-26T02:57:22.074Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/2019/08/10/%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2/</loc>
+    
+    <lastmod>2020-06-26T02:55:59.631Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/2020/01/29/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-%E6%98%BE%E7%A4%BA%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</loc>
+    
+    <lastmod>2020-06-26T02:55:26.758Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/2020/01/31/URL%E5%8F%82%E6%95%B0%E6%95%B0%E6%8D%AE%E8%BD%ACJSON%E6%95%B0%E6%8D%AE/</loc>
+    
+    <lastmod>2020-06-26T02:54:11.510Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/2020/03/09/%E4%BA%A4%E6%98%93%E6%95%B0%E6%8D%AE%E6%B7%B1%E5%BA%A6%E5%90%88%E5%B9%B6%E9%97%AE%E9%A2%98/</loc>
+    
+    <lastmod>2020-06-26T02:53:51.195Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://itnote.tech/2020/02/09/%E7%94%A8EChart%E5%9B%BE%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%98%BE%E7%A4%BA/</loc>
+    
+    <lastmod>2020-06-26T02:50:11.896Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://itnote.tech/2020/06/13/Java%E5%B7%A5%E7%A8%8B%E4%B8%AD%E7%9A%84%E4%BB%A3%E7%90%86%E8%AE%BE%E7%BD%AE/</loc>
     
-    <lastmod>2020-06-13T15:12:16.976Z</lastmod>
+    <lastmod>2020-06-26T02:47:03.646Z</lastmod>
     
   </url>
   
@@ -23,44 +72,9 @@
   </url>
   
   <url>
-    <loc>http://itnote.tech/2020/03/09/%E4%BA%A4%E6%98%93%E6%95%B0%E6%8D%AE%E6%B7%B1%E5%BA%A6%E5%90%88%E5%B9%B6%E9%97%AE%E9%A2%98/</loc>
-    
-    <lastmod>2020-03-10T04:03:55.067Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://itnote.tech/2020/02/09/%E7%94%A8EChart%E5%9B%BE%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%98%BE%E7%A4%BA/</loc>
-    
-    <lastmod>2020-02-09T06:06:05.082Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://itnote.tech/2020/01/31/URL%E5%8F%82%E6%95%B0%E6%95%B0%E6%8D%AE%E8%BD%ACJSON%E6%95%B0%E6%8D%AE/</loc>
-    
-    <lastmod>2020-01-31T08:08:04.613Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://itnote.tech/2020/01/31/%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E9%87%8D%E6%96%B0%E6%8E%92%E5%BA%8F%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2020-01-31T08:07:17.388Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://itnote.tech/2020/01/29/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3-%E6%98%BE%E7%A4%BA%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</loc>
-    
-    <lastmod>2020-01-31T05:24:42.371Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://itnote.tech/2019/11/06/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%99%A8%EF%BC%88%E8%AE%A2%E9%98%85-%E5%8F%91%E5%B8%83%E6%A8%A1%E5%BC%8F%EF%BC%89%E7%9A%84%E5%AE%9E%E7%8E%B0/</loc>
-    
-    <lastmod>2019-11-19T14:56:13.468Z</lastmod>
     
   </url>
   
@@ -89,13 +103,6 @@
     <loc>http://itnote.tech/2019/08/16/LeetCode-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</loc>
     
     <lastmod>2019-08-19T14:05:24.629Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://itnote.tech/2019/08/10/%E5%9C%A8%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BAHexo%E5%8D%9A%E5%AE%A2/</loc>
-    
-    <lastmod>2019-08-16T12:56:49.863Z</lastmod>
     
   </url>
   

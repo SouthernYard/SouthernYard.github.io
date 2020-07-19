@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'true', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    <meta name="google-site-verification" content="QDE_X8xOqjR_NftZ0cJjE-Nqlzo6NV2BvAdy6ZN8EdA">
+    
+    
+    
+    <meta name="baidu-site-verification" content="nhGBgY9Y2Z">
+    
+    
+    
+    <title>Linux下线程绑定CPU | 南院大王 | 十年饮冰，难凉热血。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="线程">
+    <meta name="description" content="背景一般情况下，吞吐量和延迟之间是有成正比的，即吞吐量越大，任务的延迟也就越大，反之亦然。在许多的应用场景下，更希望的是吞吐量大，同时也希望保证低延迟的。如果是为了满足吞吐量，但是对延迟的要求并不是特别高，只需要保证最终一致性，则多线程即可保证。但是为了保证低延迟，则更希望JVM/MicroSerivce/Machine只专注一件事。实际上，单线程在专注一个任务时，效率是非常高的。为此，要保证整个">
+<meta name="keywords" content="线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下线程绑定CPU">
+<meta property="og:url" content="http://itnote.tech/2020/07/19/Linux下CPU绑定线程/index.html">
+<meta property="og:site_name" content="南院大王">
+<meta property="og:description" content="背景一般情况下，吞吐量和延迟之间是有成正比的，即吞吐量越大，任务的延迟也就越大，反之亦然。在许多的应用场景下，更希望的是吞吐量大，同时也希望保证低延迟的。如果是为了满足吞吐量，但是对延迟的要求并不是特别高，只需要保证最终一致性，则多线程即可保证。但是为了保证低延迟，则更希望JVM/MicroSerivce/Machine只专注一件事。实际上，单线程在专注一个任务时，效率是非常高的。为此，要保证整个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://itnote.tech/images/pasted-55.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-56.png">
+<meta property="og:updated_time" content="2020-07-19T15:06:10.123Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux下线程绑定CPU">
+<meta name="twitter:description" content="背景一般情况下，吞吐量和延迟之间是有成正比的，即吞吐量越大，任务的延迟也就越大，反之亦然。在许多的应用场景下，更希望的是吞吐量大，同时也希望保证低延迟的。如果是为了满足吞吐量，但是对延迟的要求并不是特别高，只需要保证最终一致性，则多线程即可保证。但是为了保证低延迟，则更希望JVM/MicroSerivce/Machine只专注一件事。实际上，单线程在专注一个任务时，效率是非常高的。为此，要保证整个">
+<meta name="twitter:image" content="http://itnote.tech/images/pasted-55.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+    <!-- baidu auto push -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+	</script>  
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Shawn Peng</h5>
+          <a href="mailto:shawnpeng@yeah.net" title="shawnpeng@yeah.net" class="mail">shawnpeng@yeah.net</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                Home
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/SouthernYard" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Linux下线程绑定CPU</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Linux下线程绑定CPU</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-07-19T14:12:00.000Z" itemprop="datePublished" class="page-time">
+  2020-07-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术分享/">技术分享</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#背景"><span class="post-toc-number">1.</span> <span class="post-toc-text">背景</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#方案"><span class="post-toc-number">2.</span> <span class="post-toc-text">方案</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#代码"><span class="post-toc-number">3.</span> <span class="post-toc-text">代码</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Linux下CPU绑定线程"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Linux下线程绑定CPU</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-07-19 22:12:00" datetime="2020-07-19T14:12:00.000Z"  itemprop="datePublished">2020-07-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术分享/">技术分享</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>一般情况下，吞吐量和延迟之间是有成正比的，即吞吐量越大，任务的延迟也就越大，反之亦然。在许多的应用场景下，更希望的是吞吐量大，同时也希望保证低延迟的。<br>如果是为了满足吞吐量，但是对延迟的要求并不是特别高，只需要保证最终一致性，则多线程即可保证。但是为了保证低延迟，则更希望JVM/MicroSerivce/Machine只专注一件事。<br>实际上，单线程在专注一个任务时，效率是非常高的。为此，要保证整个系统的低延迟，单个CPU/CPU Core绑定一个JVM/MicroSerivce/Machine是一个非常好的解决方案。那如何解决呢？</p>
+<h1 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h1><p>服务之间使用高速总线/队列通信，或者其他队列或者总线，具体有Kafka，RabbitMQ, RocketMQ等等。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-55.png" alt="Archtecture" title>
+                </div>
+                <div class="image-caption">Archtecture</div>
+            </figure>
+<p>每个服务都是单线程。OK，可能这个时候有人问了，那么在这种情况下，多个服务就类似于多线程了，跟原来单机的多线程岂不是没有区别？实际上这是个概念问题，即并行和并发的区别。<br>简单讲一下并发和并行的区别。</p>
+<ul>
+<li><p>并发（Concurrent），在操作系统中，是指一个时间段中有几个程序都处于已启动运行到运行完毕之间，且这几个程序都是在同一个处理机上运行。并发不是真正意义上的“同时进行”，只是CPU把一个时间段划分成几个时间片段（时间区间），然后在这几个时间区间之间来回切换，由于CPU处理的速度非常快，只要时间间隔处理得当，即可让用户感觉是多个应用程序同时在进行。如：打游戏和听音乐两件事情在同一个时间段内都是在同一台电脑上完成了从开始到结束的动作。那么，就可以说听音乐和打游戏是并发的。</p>
+</li>
+<li><p>并行（Parallel），当系统有一个以上CPU时，当一个CPU执行一个进程时，另一个CPU可以执行另一个进程，两个进程互不抢占CPU资源，可以同时进行，这种方式我们称之为并行(Parallel)。其实决定并行的因素不是CPU的数量，而是CPU的核心数量，比如一个CPU多个核也可以并行。</p>
+</li>
+</ul>
+<p>总结：可以看到，在一个时间点上，<code>并发</code>只做一个任务，<code>并行</code>在做多个任务。</p>
+<ol>
+<li>并发是单CPU操作，牺牲线程的调度时间，完成一个多线程完成多任务的操作，主要牺牲时间。</li>
+<li>并行是多CPU操作，系统CPU的数量，完成多个CPU完成多任务的操作，主要牺牲物理资源。</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-56.png" alt="并行和并发" title>
+                </div>
+                <div class="image-caption">并行和并发</div>
+            </figure>
+
+<p>所以总结以上，在提高任务的处理效率，降低其延时的瓶颈都落到了高速总线上了，但这不是本节所讲的重点。回归重点，如何将一个线程绑定到一个CPU上，只专注做一件事情呢？我在<code>GitHub</code>上找到了一个开源库<a href="https://github.com/OpenHFT/Java-Thread-Affinity" target="_blank" rel="noopener">Java-Thread-Affinity</a>,就能做到这件事。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><p>在我仔细研读<code>Java-Thread-Affinity</code>的使用介绍后，其核心主要是两点：</p>
+<ol>
+<li>在Linux环境下，隔离CPU，可参考：<a href="https://github.com/peter-lawrey/Java-Thread-Affinity/wiki/Getting-started" target="_blank" rel="noopener">Get Started</a></li>
+<li>使用上述代码库,可参考：<a href="https://github.com/OpenHFT/Java-Thread-Affinity#using-affinitylock" target="_blank" rel="noopener">Using AffinityLock</a></li>
+</ol>
+<p>比如在我前文<a href="https://www.itnote.tech/2019/11/06/%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E5%99%A8%EF%BC%88%E8%AE%A2%E9%98%85-%E5%8F%91%E5%B8%83%E6%A8%A1%E5%BC%8F%EF%BC%89%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">事件分发器（订阅/发布模式）的实现</a>中提到的事件分发器，我在其中设计一个定时事件，但是又想保住其任务的准时，定时器事件不受队列排队影响导致过多的延时，这时，CPU隔离就显得格外重要，活不多说，coding please。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">timer = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">  AffinityLock al = AffinityLock.acquireLock();</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">while</span> (isActive) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        TimeUnit.MILLISECONDS.sleep(interval);</span><br><span class="line">        publishTimer();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        logger.error(<span class="string">"Failed to generate timer event"</span>, e);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    al.release();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>可以看到我使用<code>AffinityLock.acquireLock()</code>获取一个CPU锁，这样既可以完成对CPU的隔离，并实时分发事件。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-07-19T15:06:10.123Z" itemprop="dateUpdated">2020-07-19 23:06:10</time>
+</span><br>
+
+
+        
+        <a href="/2020/07/19/Linux下CPU绑定线程/" target="_blank" rel="external">http://itnote.tech/2020/07/19/Linux下CPU绑定线程/</a>
+        
+    </div>
+    
+    <footer>
+        <a href="http://itnote.tech">
+            <img src="/img/avatar.jpg" alt="Shawn Peng">
+            Shawn Peng
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程/">线程</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/&title=《Linux下线程绑定CPU》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/&title=《Linux下线程绑定CPU》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux下线程绑定CPU》 — 南院大王&url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/06/13/Java工程中的代理设置/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">HTTP和WebSocket的代理设置</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "GlcXiFFsuW3fe7nQGfyzdIuI-MdYXbMMI",
+            appKey: "2wwcHmeOw1rxX5JaoYbnDuf3",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷请我吃猪蹄~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Shawn Peng &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/&title=《Linux下线程绑定CPU》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/&title=《Linux下线程绑定CPU》 — 南院大王&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux下线程绑定CPU》 — 南院大王&url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/&via=http://itnote.tech" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2020/07/19/Linux下CPU绑定线程/" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

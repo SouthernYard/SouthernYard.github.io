@@ -43,7 +43,7 @@ ga('send', 'pageview');
 <meta property="og:site_name" content="南院大王">
 <meta property="og:description" content="背景在工作中会写一些UI自动化测试的case来测试, 但是UI测试的时候, case会失败, 此时如果有个截图或者录屏就很有用. 由于在工作中使用的是cucumber, 所以代码是在cucumber中实现的, 但是作为工具, 也可以独立使用. 方案在UI case中, 如果给失败的case进行录屏, 那么可以更加有效, 有针对性地对case的失败行为进行分析. 能清除地知道,在执行某些步骤的时候,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-09-29T12:56:58.487Z">
+<meta property="og:updated_time" content="2020-09-29T12:59:03.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何在cucumber UI case中录制视频">
 <meta name="twitter:description" content="背景在工作中会写一些UI自动化测试的case来测试, 但是UI测试的时候, case会失败, 此时如果有个截图或者录屏就很有用. 由于在工作中使用的是cucumber, 所以代码是在cucumber中实现的, 但是作为工具, 也可以独立使用. 方案在UI case中, 如果给失败的case进行录屏, 那么可以更加有效, 有针对性地对case的失败行为进行分析. 能清除地知道,在执行某些步骤的时候,">
@@ -230,8 +230,6 @@ ga('send', 'pageview');
 
 <p>cucumber的case中可以使用hook类, 将case的视频嵌入的报告中, 示例代码如下:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CucumberHooks</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Before</span>(order = Integer.MAX_VALUE)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">startRecording</span><span class="params">(Scenario scenario)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (Boolean.parseBoolean(System.getProperty(<span class="string">"recordVideo"</span>))) &#123;</span><br><span class="line">      <span class="comment">// start recording</span></span><br><span class="line">      ScreenRecorderUtil.startRecord(scenario.getName());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line"> <span class="meta">@After</span>(order = Integer.MAX_VALUE)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getRecording</span><span class="params">(Scenario scenario)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    DPMScreenRecorderUtil.stopRecord();</span><br><span class="line">    <span class="keyword">if</span> (scenario.isFailed()) &#123;</span><br><span class="line">      scenario.embed(DPMScreenRecorderUtil.getRecord(), <span class="string">"video/mp4"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
         </div>
 
         <blockquote class="post-copyright">
@@ -239,7 +237,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-09-29T12:56:58.487Z" itemprop="dateUpdated">2020-09-29 20:56:58</time>
+    最后更新时间：<time datetime="2020-09-29T12:59:03.622Z" itemprop="dateUpdated">2020-09-29 20:59:03</time>
 </span><br>
 
 

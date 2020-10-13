@@ -44,7 +44,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="背景Xronos是基于宽界(QuantWorld)的进阶版本非开源量化交易系统，针对宽界的设计瓶颈而设计的系统。宽界系统的瓶颈：  过于依赖分发器。分发器承担了大量的事件分发任务，导致队列的消息不能及时被消费，最终导致各类消息被消费时与入队时有比较大的延迟（毫秒-秒级别），这是无法容忍的。如果某个subscriber执行的时间过长，则大大影响系统性能，这种同步且阻塞的机制是核心组件的上巨大缺陷。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://itnote.tech/images/pasted-66.png">
-<meta property="og:updated_time" content="2020-10-09T09:58:59.438Z">
+<meta property="og:updated_time" content="2020-10-13T03:30:37.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xronos架构设计">
 <meta name="twitter:description" content="背景Xronos是基于宽界(QuantWorld)的进阶版本非开源量化交易系统，针对宽界的设计瓶颈而设计的系统。宽界系统的瓶颈：  过于依赖分发器。分发器承担了大量的事件分发任务，导致队列的消息不能及时被消费，最终导致各类消息被消费时与入队时有比较大的延迟（毫秒-秒级别），这是无法容忍的。如果某个subscriber执行的时间过长，则大大影响系统性能，这种同步且阻塞的机制是核心组件的上巨大缺陷。">
@@ -225,7 +225,8 @@ ga('send', 'pageview');
 <li>JVM GC问题。Java的GC问题会导致系统内存太高，影响整个系统的性能，这会导致系统无法长时间、稳定、高效运行。JVM GC问题本身也是Java自身设计上的缺陷，但也并非不能避免。</li>
 </ol>
 <p>针对以上五个问题，都会在Xronos中解决。</p>
-<h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><figure class="image-bubble">
+<h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><p>Xronos的设计将针对以上的问题进行改造和提升, 其目的是将Xrono设计成高可用, 高性能, 低耦合, 低延迟, 可重复的系统. </p>
+<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="/images/pasted-66.png" alt="Xronos Architecture" title>
@@ -239,7 +240,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-10-09T09:58:59.438Z" itemprop="dateUpdated">2020-10-09 17:58:59</time>
+    最后更新时间：<time datetime="2020-10-13T03:30:37.507Z" itemprop="dateUpdated">2020-10-13 11:30:37</time>
 </span><br>
 
 

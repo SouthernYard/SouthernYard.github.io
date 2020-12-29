@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://itnote.tech/"/>
-  <updated>2020-12-29T12:39:16.695Z</updated>
+  <updated>2020-12-29T12:40:00.935Z</updated>
   <id>http://itnote.tech/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>2020年终总结</title>
     <link href="http://itnote.tech/2020/12/29/2020%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
     <id>http://itnote.tech/2020/12/29/2020年终总结/</id>
-    <published>2020-12-29T12:29:10.000Z</published>
-    <updated>2020-12-29T12:39:16.695Z</updated>
+    <published>2020-12-29T12:29:00.000Z</published>
+    <updated>2020-12-29T12:40:00.935Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Good"><a href="#Good" class="headerlink" title="Good"></a>Good</h2><ol><li>QuantWorld完成开发, 目前在维护, 算是阶段性胜利, 因为架构和性能问题, 后期也不打算长时间维护.</li><li>Xronos继续开发, 目前有所进展.</li><li>年末几个月看了4本技术书, 也不算太内疚.</li><li>顺利结婚.</li></ol><h2 id="Bad"><a href="#Bad" class="headerlink" title="Bad"></a>Bad</h2><ol><li>亲友多人受伤, 琐事连连.</li><li>赚钱目标未达成.</li><li>Xronos进展缓慢, 没有大块时间开发.</li></ol><h2 id="Expected"><a href="#Expected" class="headerlink" title="Expected"></a>Expected</h2><ol><li>系统学习Java技术.</li><li>希望能尽快完成Xronos并上线, 我希望是6个月内.</li><li>希望能提升收入.</li><li>希望家人平安.</li></ol>]]></content>
     
@@ -35,6 +35,10 @@
     
     </summary>
     
+      <category term="年终总结" scheme="http://itnote.tech/categories/%E5%B9%B4%E7%BB%88%E6%80%BB%E7%BB%93/"/>
+    
+    
+      <category term="2020" scheme="http://itnote.tech/tags/2020/"/>
     
   </entry>
   

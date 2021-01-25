@@ -44,7 +44,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="背景Xronos是基于宽界(QuantWorld)的进阶版本非开源量化交易系统，针对宽界的设计瓶颈而设计的系统。宽界系统的瓶颈：  过于依赖分发器。分发器承担了大量的事件分发任务，导致队列的消息不能及时被消费，最终导致各类消息被消费时与入队时有比较大的延迟（毫秒-秒级别），这是无法容忍的。如果某个subscriber执行的时间过长，则大大影响系统性能，这种同步且阻塞的机制是核心组件的上巨大缺陷。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://itnote.tech/images/pasted-66.png">
-<meta property="og:updated_time" content="2021-01-25T03:22:42.645Z">
+<meta property="og:updated_time" content="2021-01-25T03:33:36.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xronos架构设计">
 <meta name="twitter:description" content="背景Xronos是基于宽界(QuantWorld)的进阶版本非开源量化交易系统，针对宽界的设计瓶颈而设计的系统。宽界系统的瓶颈：  过于依赖分发器。分发器承担了大量的事件分发任务，导致队列的消息不能及时被消费，最终导致各类消息被消费时与入队时有比较大的延迟（毫秒-秒级别），这是无法容忍的。如果某个subscriber执行的时间过长，则大大影响系统性能，这种同步且阻塞的机制是核心组件的上巨大缺陷。">
@@ -226,11 +226,11 @@ ga('send', 'pageview');
 </ol>
 <p>针对以上五个问题，都会在Xronos中解决。</p>
 <h1 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h1><h2 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h2><ol>
-<li>低耦合</li>
-<li>单线程</li>
-<li>Consumner centric</li>
-<li>Lambda架构</li>
-<li>Off-Heap<figure class="image-bubble">
+<li>服务低耦合, 使用高速消息中间件</li>
+<li>单机单线程, 多机(JVM/Machine)并行</li>
+<li>Consumner centric: 消费者pull模式</li>
+<li>Lambda架构: 尽可能地无状态执行</li>
+<li>Off-Heap: 降低GC频率<figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
                     <img src="/images/pasted-66.png" alt="Xronos Architecture" title>
@@ -246,7 +246,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-01-25T03:22:42.645Z" itemprop="dateUpdated">2021-01-25 11:22:42</time>
+    最后更新时间：<time datetime="2021-01-25T03:33:36.799Z" itemprop="dateUpdated">2021-01-25 11:33:36</time>
 </span><br>
 
 

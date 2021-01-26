@@ -194,7 +194,7 @@ ga('send', 'pageview');
 
   
     <h3 class="post-title" itemprop="name">
-      <a class="post-title-link" href="/2021/01/26/ronos架构设计-2/">Xronos: 架构设计 2</a>
+      <a class="post-title-link" href="/2021/01/26/ronos架构设计-2/">Xronos: 架构设计-2</a>
     </h3>
   
 
@@ -204,15 +204,15 @@ ga('send', 'pageview');
     <div class="post-content" id="post-content" itemprop="postContent">
 
     
-        在架构设计1中我提到了宽界的缺陷, 并为此提供了解决方案和设计原则.
+        简述在Xronos架构设计1中我提到了宽界的缺陷, 并为此提供了解决方案和设计原则.
 
 服务低耦合, 使用高速消息中间件
 单机单线程, 多机(JVM/Machine)并行
 Consumner centric: 消费者pull模式
-Lambda架构: 尽可能地无状态执行
+Lambda架构: 尽可能地无状态执行，减少对事件或数据源的更改
 Off-Heap: 降低GC频率
 
-Xronos将在这五个原则上设计与实施。1与4是架构上的设计原则，因此，在本篇文章中，主要涉及的原则就是...
+Xronos将在这五个原则下进行设计与实施。1与4是架构上的设...
     
 
         <a href="/2021/01/26/ronos架构设计-2/" class="post-more waves-effect waves-button">

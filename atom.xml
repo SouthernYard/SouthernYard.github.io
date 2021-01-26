@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://itnote.tech/"/>
-  <updated>2020-12-29T12:41:41.414Z</updated>
+  <updated>2021-01-26T13:46:12.185Z</updated>
   <id>http://itnote.tech/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Xronos: 架构设计 2</title>
+    <link href="http://itnote.tech/2021/01/26/ronos%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-2/"/>
+    <id>http://itnote.tech/2021/01/26/ronos架构设计-2/</id>
+    <published>2021-01-26T10:09:00.000Z</published>
+    <updated>2021-01-26T13:46:12.185Z</updated>
+    
+    <content type="html"><![CDATA[<p>在架构设计1中我提到了宽界的缺陷, 并为此提供了解决方案和设计原则.</p><ol><li>服务低耦合, 使用高速消息中间件</li><li>单机单线程, 多机(JVM/Machine)并行</li><li>Consumner centric: 消费者pull模式</li><li>Lambda架构: 尽可能地无状态执行</li><li>Off-Heap: 降低GC频率</li></ol><p>Xronos将在这五个原则上设计与实施。<br>1与4是架构上的设计原则，因此，在本篇文章中，主要涉及的原则就是这两个。<br>为实现服务低耦合，我们需要将服务拆分，根据微服务的拆分原则，我将架构分成三层。</p><p><strong>服务低耦合</strong>：</p><ol><li>Application: 提供展示页面，实施展示数据以及指令控制。<ul><li>数据可视化</li><li>指令控制</li></ul></li><li>Main Service: 核心服务层<ul><li>策略管理器</li><li>交易服务</li><li>订单管理服务</li><li>数据（分析）服务</li><li>持久化服务</li></ul></li><li>Gateway: 提供交易所的路由服务<ul><li>Websocket</li><li>API</li></ul></li></ol><p><strong>Lambda架构</strong><br>什么是lambda架构？参考维基百科：</p><blockquote><p><a href="https://en.wikipedia.org/wiki/Lambda_architecture" target="_blank" rel="noopener">Lambda architecture</a> depends on a data model with an append-only, immutable data source that serves as a system of record.It is intended for ingesting and processing timestamped events that are appended to existing events rather than overwriting them. State is determined from the natural time-based ordering of the data.</p></blockquote><p>简而言之：组件在消费数据时不对数据源进行更改，组件产生的数据只能追加在原有的事件之后。<br>以下是架构设计图：</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/pasted-67.png" alt="upload successful" title>                </div>                <div class="image-caption">upload successful</div>            </figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在架构设计1中我提到了宽界的缺陷, 并为此提供了解决方案和设计原则.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;服务低耦合, 使用高速消息中间件&lt;/li&gt;
+&lt;li&gt;单机单线程, 多机(JVM/Machine)并行&lt;/li&gt;
+&lt;li&gt;Consumner centric: 消费者pull模式&lt;
+      
+    
+    </summary>
+    
+      <category term="技术分享" scheme="http://itnote.tech/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="Xronos" scheme="http://itnote.tech/tags/Xronos/"/>
+    
+  </entry>
   
   <entry>
     <title>2020年终总结</title>

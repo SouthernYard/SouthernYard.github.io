@@ -44,7 +44,7 @@ ga('send', 'pageview');
 <meta property="og:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://itnote.tech/images/pasted-70.png">
-<meta property="og:updated_time" content="2021-03-16T15:23:28.081Z">
+<meta property="og:updated_time" content="2021-03-16T15:31:45.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xronos: 架构设计-3">
 <meta name="twitter:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
@@ -235,7 +235,11 @@ ga('send', 'pageview');
 <li>不少的去耦合的概念可以借鉴.</li>
 <li>电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不要用不了). 而HFT系统则是注重的是单机响应(慢了不行, 宁可不交易)</li>
 </ol>
-<p>因此, 两种系统的区别实际上就是高可用和高性能直接的区别. 前者更倾向于高可用, 后者更倾向于高性能. 所以在系统的设计上, 我们需要有针对性的倾向性, 在模版架构上, 对主要链路进行精细化设计是至关重要的. 如何权衡, 则是一个重要的问题.</p>
+<p>两种系统的区别实际上就是高可用和高性能直接的区别. 前者更倾向于高可用, 后者更倾向于高性能。本质上是吞吐量和延迟之间的区别, 此处引入两者的定义，实际有更密切的公式关系，相互之间呈反比。</p>
+<blockquote>
+<p> <strong>Latency</strong> – The time taken for a packet to be transferred across a network. You can measure this as one-way to its destination or as a round trip.<br><strong>Throughput</strong> – The quantity of data being sent and received within a unit of time</p>
+</blockquote>
+<p>所以在系统的设计上, 我们需要有针对性的倾向性, 在模版架构上, 对主要链路进行精细化设计是至关重要的. 如何权衡, 则是一个重要的问题.</p>
 <h1 id="权衡"><a href="#权衡" class="headerlink" title="权衡"></a>权衡</h1><p>在讨论如何权衡之前, 需要整体把握设计初衷.</p>
 <ol>
 <li>为什么去耦合?<br> 因为低耦合可以方便系统部署, 降低单模块的复杂性, 方便水平扩展.</li>
@@ -263,7 +267,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-03-16T15:23:28.081Z" itemprop="dateUpdated">2021-03-16 23:23:28</time>
+    最后更新时间：<time datetime="2021-03-16T15:31:45.514Z" itemprop="dateUpdated">2021-03-16 23:31:45</time>
 </span><br>
 
 

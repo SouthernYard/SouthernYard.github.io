@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://itnote.tech/"/>
-  <updated>2021-03-16T15:23:28.081Z</updated>
+  <updated>2021-03-16T15:31:45.514Z</updated>
   <id>http://itnote.tech/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://itnote.tech/2021/03/16/Xronos-%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1-3/"/>
     <id>http://itnote.tech/2021/03/16/Xronos-架构设计-3/</id>
     <published>2021-03-16T05:25:00.000Z</published>
-    <updated>2021-03-16T15:23:28.081Z</updated>
+    <updated>2021-03-16T15:31:45.514Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.<br>HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.</p><ol><li>不少的去耦合的概念可以借鉴.</li><li>电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不要用不了). 而HFT系统则是注重的是单机响应(慢了不行, 宁可不交易)</li></ol><p>因此, 两种系统的区别实际上就是高可用和高性能直接的区别. 前者更倾向于高可用, 后者更倾向于高性能. 所以在系统的设计上, 我们需要有针对性的倾向性, 在模版架构上, 对主要链路进行精细化设计是至关重要的. 如何权衡, 则是一个重要的问题.</p><h1 id="权衡"><a href="#权衡" class="headerlink" title="权衡"></a>权衡</h1><p>在讨论如何权衡之前, 需要整体把握设计初衷.</p><ol><li>为什么去耦合?<br> 因为低耦合可以方便系统部署, 降低单模块的复杂性, 方便水平扩展.</li><li>为什么要有这么多模块?<br> 原则上跟问题1是一个问题. 不同的模块功能不一样, 有些模块是CPU密集型, 有些模块是IO密集型. 因此这些模块的存在应该是并行存在, 而非是串行.</li><li>如何让模块之间的相互影响更小?<ul><li>设计主路径: 非CPU密集和非IO密集模块组成的主要运行路径,各模块低耦合通信, 无阻塞.</li><li>设计次路径: 该路径上各模块并行执行, 相互的功能独立, 依赖性低.</li></ul></li></ol><h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><p>此时又要回到在架构1中已经提及的设计。为了避免主要路径被阻塞，Xronos也引入了反馈的设计参考了如下的设计。</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/pasted-70.png" alt="lambda arch" title>                </div>                <div class="image-caption">lambda arch</div>            </figure><p>以控制系统为核心的主路径，执行的是所有非阻塞的，非IO密集，非CPU密集的任务。主要以权限控制，状态控制为主。<br>在Xronos架构设计1中我已经较详细地设计了系统，在此处不再赘述。</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.<br>HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.</p><ol><li>不少的去耦合的概念可以借鉴.</li><li>电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不要用不了). 而HFT系统则是注重的是单机响应(慢了不行, 宁可不交易)</li></ol><p>两种系统的区别实际上就是高可用和高性能直接的区别. 前者更倾向于高可用, 后者更倾向于高性能。本质上是吞吐量和延迟之间的区别, 此处引入两者的定义，实际有更密切的公式关系，相互之间呈反比。</p><blockquote><p> <strong>Latency</strong> – The time taken for a packet to be transferred across a network. You can measure this as one-way to its destination or as a round trip.<br><strong>Throughput</strong> – The quantity of data being sent and received within a unit of time</p></blockquote><p>所以在系统的设计上, 我们需要有针对性的倾向性, 在模版架构上, 对主要链路进行精细化设计是至关重要的. 如何权衡, 则是一个重要的问题.</p><h1 id="权衡"><a href="#权衡" class="headerlink" title="权衡"></a>权衡</h1><p>在讨论如何权衡之前, 需要整体把握设计初衷.</p><ol><li>为什么去耦合?<br> 因为低耦合可以方便系统部署, 降低单模块的复杂性, 方便水平扩展.</li><li>为什么要有这么多模块?<br> 原则上跟问题1是一个问题. 不同的模块功能不一样, 有些模块是CPU密集型, 有些模块是IO密集型. 因此这些模块的存在应该是并行存在, 而非是串行.</li><li>如何让模块之间的相互影响更小?<ul><li>设计主路径: 非CPU密集和非IO密集模块组成的主要运行路径,各模块低耦合通信, 无阻塞.</li><li>设计次路径: 该路径上各模块并行执行, 相互的功能独立, 依赖性低.</li></ul></li></ol><h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><p>此时又要回到在架构1中已经提及的设计。为了避免主要路径被阻塞，Xronos也引入了反馈的设计参考了如下的设计。</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/pasted-70.png" alt="lambda arch" title>                </div>                <div class="image-caption">lambda arch</div>            </figure><p>以控制系统为核心的主路径，执行的是所有非阻塞的，非IO密集，非CPU密集的任务。主要以权限控制，状态控制为主。<br>在Xronos架构设计1中我已经较详细地设计了系统，在此处不再赘述。</p>]]></content>
     
     <summary type="html">
     

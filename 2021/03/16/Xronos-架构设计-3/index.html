@@ -35,19 +35,19 @@ ga('send', 'pageview');
     
     
     <meta name="keywords" content="Xronos">
-    <meta name="description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
+    <meta name="description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
 <meta name="keywords" content="Xronos">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Xronos: 架构设计-3">
 <meta property="og:url" content="http://itnote.tech/2021/03/16/Xronos-架构设计-3/index.html">
 <meta property="og:site_name" content="南院大王">
-<meta property="og:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
+<meta property="og:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://itnote.tech/images/pasted-70.png">
-<meta property="og:updated_time" content="2021-03-16T15:31:45.514Z">
+<meta property="og:updated_time" content="2021-03-16T15:37:07.037Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Xronos: 架构设计-3">
-<meta name="twitter:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
+<meta name="twitter:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.  不少的去耦合的概念可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不">
 <meta name="twitter:image" content="http://itnote.tech/images/pasted-70.png">
     
         <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
@@ -230,12 +230,12 @@ ga('send', 'pageview');
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.<br>HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一般.</p>
+            <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.<br>HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.</p>
 <ol>
 <li>不少的去耦合的概念可以借鉴.</li>
 <li>电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不要用不了). 而HFT系统则是注重的是单机响应(慢了不行, 宁可不交易)</li>
 </ol>
-<p>两种系统的区别实际上就是高可用和高性能直接的区别. 前者更倾向于高可用, 后者更倾向于高性能。本质上是吞吐量和延迟之间的区别, 此处引入两者的定义，实际有更密切的公式关系，相互之间呈反比。</p>
+<p>两种系统的区别实际上就是高可用和高性能直接的区别. 前者更倾向于高可用, 后者更倾向于高性能。本质上是吞吐量和延迟之间的区别, 此处引入两者的定义，实际可以用公式描述两者的关系，相互之间呈反比。</p>
 <blockquote>
 <p> <strong>Latency</strong> – The time taken for a packet to be transferred across a network. You can measure this as one-way to its destination or as a round trip.<br><strong>Throughput</strong> – The quantity of data being sent and received within a unit of time</p>
 </blockquote>
@@ -267,7 +267,7 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-03-16T15:31:45.514Z" itemprop="dateUpdated">2021-03-16 23:31:45</time>
+    最后更新时间：<time datetime="2021-03-16T15:37:07.037Z" itemprop="dateUpdated">2021-03-16 23:37:07</time>
 </span><br>
 
 

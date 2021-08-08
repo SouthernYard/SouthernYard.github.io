@@ -28,27 +28,30 @@ ga('send', 'pageview');
     
     
     
-    <title>Xronos: 架构设计-3 | 南院大王 | 十年饮冰，难凉热血。</title>
+    <title>Linux上实现CPU孤立 | 南院大王 | 十年饮冰，难凉热血。</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="Xronos">
-    <meta name="description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.  不少的去耦合的架构设计可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但">
-<meta name="keywords" content="Xronos">
+    <meta name="keywords" content="技术分享">
+    <meta name="description" content="背景在Linux上可以实现CPU孤立，从而让孤立的CPU实现单任务执行，减少其他任务使用该CPU，以提升单CPU的运行效率。通过任务绑核操作，达到CPU亲和性的目的。什么是CPU亲和性，以下摘自维基百科。  处理器亲和性又称处理器关联。通过处理器关联可以将虚拟机或虚拟处理器映射到一个或多个物理处理器上。该技术基于对称多处理机操作系统中的native central queue调度算法。队列（que">
+<meta name="keywords" content="技术分享">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Xronos: 架构设计-3">
-<meta property="og:url" content="http://itnote.tech/2021/03/16/Xronos-架构设计-3/index.html">
+<meta property="og:title" content="Linux上实现CPU孤立">
+<meta property="og:url" content="http://itnote.tech/2021/07/07/Linux上实现CPU孤立/index.html">
 <meta property="og:site_name" content="南院大王">
-<meta property="og:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.  不少的去耦合的架构设计可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但">
+<meta property="og:description" content="背景在Linux上可以实现CPU孤立，从而让孤立的CPU实现单任务执行，减少其他任务使用该CPU，以提升单CPU的运行效率。通过任务绑核操作，达到CPU亲和性的目的。什么是CPU亲和性，以下摘自维基百科。  处理器亲和性又称处理器关联。通过处理器关联可以将虚拟机或虚拟处理器映射到一个或多个物理处理器上。该技术基于对称多处理机操作系统中的native central queue调度算法。队列（que">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://itnote.tech/images/pasted-70.png">
-<meta property="og:updated_time" content="2021-03-18T03:00:41.490Z">
+<meta property="og:image" content="http://itnote.tech/images/pasted-72.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-71.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-73.png">
+<meta property="og:image" content="http://itnote.tech/images/pasted-74.png">
+<meta property="og:updated_time" content="2021-07-07T03:54:06.852Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xronos: 架构设计-3">
-<meta name="twitter:description" content="简述在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.  不少的去耦合的架构设计可以借鉴. 电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但">
-<meta name="twitter:image" content="http://itnote.tech/images/pasted-70.png">
+<meta name="twitter:title" content="Linux上实现CPU孤立">
+<meta name="twitter:description" content="背景在Linux上可以实现CPU孤立，从而让孤立的CPU实现单任务执行，减少其他任务使用该CPU，以提升单CPU的运行效率。通过任务绑核操作，达到CPU亲和性的目的。什么是CPU亲和性，以下摘自维基百科。  处理器亲和性又称处理器关联。通过处理器关联可以将虚拟机或虚拟处理器映射到一个或多个物理处理器上。该技术基于对称多处理机操作系统中的native central queue调度算法。队列（que">
+<meta name="twitter:image" content="http://itnote.tech/images/pasted-72.png">
     
         <link rel="alternate" type="application/atom+xml" title="南院大王" href="/atom.xml">
     
@@ -157,7 +160,7 @@ ga('send', 'pageview');
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Xronos: 架构设计-3</div>
+        <div class="flex-col header-title ellipsis">Linux上实现CPU孤立</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -179,11 +182,11 @@ ga('send', 'pageview');
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Xronos: 架构设计-3</h1>
+        <h1 class="title">Linux上实现CPU孤立</h1>
         <h5 class="subtitle">
             
-                <time datetime="2021-03-16T05:25:00.000Z" itemprop="datePublished" class="page-time">
-  2021-03-16
+                <time datetime="2021-07-07T00:13:00.000Z" itemprop="datePublished" class="page-time">
+  2021-07-07
 </time>
 
 
@@ -204,18 +207,18 @@ ga('send', 'pageview');
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#简述"><span class="post-toc-number">1.</span> <span class="post-toc-text">简述</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#权衡"><span class="post-toc-number">2.</span> <span class="post-toc-text">权衡</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#设计"><span class="post-toc-number">3.</span> <span class="post-toc-text">设计</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#背景"><span class="post-toc-number">1.</span> <span class="post-toc-text">背景</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">实现</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#测试"><span class="post-toc-number">3.</span> <span class="post-toc-text">测试</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#结论"><span class="post-toc-number">4.</span> <span class="post-toc-text">结论</span></a></li></ol>
         </nav>
     </aside>
 
 
-<article id="post-Xronos-架构设计-3"
+<article id="post-Linux上实现CPU孤立"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Xronos: 架构设计-3</h1>
+        <h1 class="post-card-title">Linux上实现CPU孤立</h1>
         <div class="post-meta">
-            <time class="post-time" title="2021-03-16 13:25:00" datetime="2021-03-16T05:25:00.000Z"  itemprop="datePublished">2021-03-16</time>
+            <time class="post-time" title="2021-07-07 08:13:00" datetime="2021-07-07T00:13:00.000Z"  itemprop="datePublished">2021-07-07</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/技术分享/">技术分享</a></li></ul>
@@ -230,35 +233,55 @@ ga('send', 'pageview');
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>在前文的Xronos的架构设计1和2中已经基本提到了整个系统的工作流程和层级架构. 本文会针对设计理解进行进一步的讨论和设计.<br>HFT系统主要的特点是快, 如何在极短的时间内找到套利可能行, 并交易成功.很多人会误以为淘宝等成熟的电商平台的架构直接套用就能实现HFT系统. 事实上, 这只对了一半.</p>
-<ol>
-<li>不少的去耦合的架构设计可以借鉴.</li>
-<li>电商平台注重的是水平扩展, 更重视其可用性(慢一点无所谓, 但是不要用不了). 而HFT系统则是注重的是单机响应(慢了不行, 宁可不交易)</li>
-</ol>
-<p>两种系统的区别实际上就是高可用和高性能直接的区别. 前者更倾向于高可用, 后者更倾向于高性能。本质上是吞吐量和延迟之间的区别, 此处引入两者的定义，实际可以用公式描述两者的关系，相互之间呈反比。</p>
+            <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在Linux上可以实现CPU孤立，从而让孤立的CPU实现单任务执行，减少其他任务使用该CPU，以提升单CPU的运行效率。通过任务绑核操作，达到CPU亲和性的目的。<br>什么是CPU亲和性，以下摘自维基百科。</p>
 <blockquote>
-<p> <strong>Latency</strong> – The time taken for a packet to be transferred across a network. You can measure this as one-way to its destination or as a round trip.<br><strong>Throughput</strong> – The quantity of data being sent and received within a unit of time</p>
+<p>处理器亲和性又称处理器关联。通过处理器关联可以将虚拟机或虚拟处理器映射到一个或多个物理处理器上。该技术基于对称多处理机操作系统中的native central queue调度算法。队列（queue）中的每一个任务（进程或线程）都有一个标签（tag）来指定它们倾向的处理器。在分配处理器的阶段，每个任务就会分配到它们所倾向的处理器上。<br>处理器亲和性利用了这样一个事实，就是进程上一次运行后的残余信息会保留在处理器的状态中（也就是指处理器的缓存）。如果下一次仍然将该进程调度到同一个处理器上，就能避免一些不好的情况（比如缓存未命中），使得进程的运行更加高效。<br>调度算法对于处理器亲和性的支持各不相同。有些调度算法在它认为合适的情况下会允许把一个任务调度到不同的处理器上。比如当两个计算密集型的任务（A和B）同时对一个处理器具有亲和性时，另外一个处理器可能就被闲置了。这种情况下许多调度算法会把任务B调度到第二个处理器上，使得多处理器的利用更加充分。<br>处理器亲和性能够有效地解决一些高速缓存的问题，但却不能缓解负载均衡的问题。而且，在异构系统中，处理器亲和性问题会变得更加复杂。</p>
 </blockquote>
-<p>所以在系统的设计上, 我们需要有针对性的倾向性, 在模版架构上, 对主要链路进行精细化设计是至关重要的. 如何权衡, 则是一个重要的问题.</p>
-<h1 id="权衡"><a href="#权衡" class="headerlink" title="权衡"></a>权衡</h1><p>在讨论如何权衡之前, 需要整体把握设计初衷.</p>
+<p>总结就是：CPU亲和性提升了单CPU的运行效率，因为CPU只执行单个任务，降低了任务切换的成本。同时也来带了无法负载均衡任务。</p>
+<p>所以，CPU亲和性的主要目的是为了执行并行任务，而非并发任务，此为大前提。</p>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>目前只在Linux上实现</p>
 <ol>
-<li>为什么去耦合?<br> 因为低耦合可以方便系统部署, 降低单模块的复杂性, 方便水平扩展.</li>
-<li>为什么要有这么多模块?<br> 原则上跟问题1是一个问题. 不同的模块功能不一样, 有些模块是CPU密集型, 有些模块是IO密集型. 因此这些模块的存在应该是并行存在, 而非是串行.</li>
-<li>如何让模块之间的相互影响更小?<ul>
-<li>设计主路径: 非CPU密集和非IO密集模块组成的主要运行路径,各模块低耦合通信, 无阻塞.</li>
-<li>设计次路径: 该路径上各模块并行执行, 相互的功能独立, 依赖性低.</li>
+<li><p>决定所需要孤立的CPU</p>
+<ul>
+<li><p>通过<code>htop</code>指令看到本机的CPU编号，总共有6个核心，实际编号是0-5，因此在孤立CPU的时候，应该以后者为准。<br><img src="/images/pasted-72.png" alt></p>
+</li>
+<li><p>在grub中设置需要孤立的CPU</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/default/grub</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在GRUB_COMLINE_LINUX_DEFAULT的配置中，配置类似于如下的配置以隔离CPU<br>  <img src="/images/pasted-71.png" alt></p>
+</li>
+<li><p>执行 <code>sudo update-grub</code>使其生效。</p>
+</li>
+</ul>
+</li>
+<li><p>中断均衡服务</p>
+<ul>
+<li>通过执行<code>sudo sysv-rc-conf --level 123456 irqbalance off</code>中断均衡服务</li>
 </ul>
 </li>
 </ol>
-<h1 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h1><p>此时又要回到在架构1中已经提及的设计。为了避免主要路径被阻塞，Xronos也引入了反馈机制, 并参考了如下的设计。</p>
+<h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><ol>
+<li>执行<code>stress -c 6</code>可以看到<br>CPU：1,2,3已经被孤立了，不参与任务的负载均衡。</li>
+</ol>
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="/images/pasted-70.png" alt="lambda arch with feedback" title>
+                    <img src="/images/pasted-73.png" alt title>
                 </div>
-                <div class="image-caption">lambda arch with feedback</div>
+                <div class="image-caption"></div>
             </figure>
-<p>以控制系统为核心的主路径，执行的是所有非阻塞的，非IO密集，非CPU密集的任务。主要以权限控制，状态控制为主。<br>在Xronos架构设计1中我已经较详细地设计了系统，在此处不再赘述。</p>
+<ol start="2">
+<li>执行<code>taskset -c 1 stress -c 1</code>可以看到 CPU1单独执行任务，其他CPU并不参与任务的负载均衡。</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/images/pasted-74.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>根据以上的配置，通过孤立CPU，达到任务的CPU亲和性的目的。</p>
 
         </div>
 
@@ -267,12 +290,12 @@ ga('send', 'pageview');
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2021-03-18T03:00:41.490Z" itemprop="dateUpdated">2021-03-18 11:00:41</time>
+    最后更新时间：<time datetime="2021-07-07T03:54:06.852Z" itemprop="dateUpdated">2021-07-07 11:54:06</time>
 </span><br>
 
 
         
-        <a href="/2021/03/16/Xronos-架构设计-3/" target="_blank" rel="external">http://itnote.tech/2021/03/16/Xronos-架构设计-3/</a>
+        <a href="/2021/07/07/Linux上实现CPU孤立/" target="_blank" rel="external">http://itnote.tech/2021/07/07/Linux上实现CPU孤立/</a>
         
     </div>
     
@@ -293,7 +316,7 @@ ga('send', 'pageview');
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Xronos/">Xronos</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术分享/">技术分享</a></li></ul>
 
 
             
@@ -303,7 +326,7 @@ ga('send', 'pageview');
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/&title=《Xronos: 架构设计-3》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/&title=《Linux上实现CPU孤立》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -313,22 +336,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/&title=《Xronos: 架构设计-3》 — 南院大王&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/&title=《Linux上实现CPU孤立》 — 南院大王&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2021/03/16/Xronos-架构设计-3/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Xronos: 架构设计-3》 — 南院大王&url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/&via=http://itnote.tech" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux上实现CPU孤立》 — 南院大王&url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/&via=http://itnote.tech" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -348,21 +371,14 @@ ga('send', 'pageview');
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between">
-  
-    <div class="waves-block waves-effect prev">
-      <a href="/2021/07/07/Linux上实现CPU孤立/" id="post-prev" class="post-nav-link">
-        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Linux上实现CPU孤立</h4>
-      </a>
-    </div>
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2021/01/26/Xronos架构设计-2/" id="post-next" class="post-nav-link">
+      <a href="/2021/03/16/Xronos-架构设计-3/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Xronos: 架构设计-2</h4>
+        <h4 class="title">Xronos: 架构设计-3</h4>
       </a>
     </div>
   
@@ -486,7 +502,7 @@ ga('send', 'pageview');
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/&title=《Xronos: 架构设计-3》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/&title=《Linux上实现CPU孤立》 — 南院大王&pic=http://itnote.tech/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -496,22 +512,22 @@ ga('send', 'pageview');
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/&title=《Xronos: 架构设计-3》 — 南院大王&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/&title=《Linux上实现CPU孤立》 — 南院大王&source=" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2021/03/16/Xronos-架构设计-3/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Xronos: 架构设计-3》 — 南院大王&url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/&via=http://itnote.tech" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Linux上实现CPU孤立》 — 南院大王&url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/&via=http://itnote.tech" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2021/03/16/Xronos-架构设计-3/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -522,7 +538,7 @@ ga('send', 'pageview');
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2021/03/16/Xronos-架构设计-3/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://itnote.tech/2021/07/07/Linux上实现CPU孤立/" alt="微信分享二维码">
 </div>
 
 

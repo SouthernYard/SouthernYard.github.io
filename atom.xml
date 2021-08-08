@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://itnote.tech/"/>
-  <updated>2021-03-18T03:00:41.490Z</updated>
+  <updated>2021-07-07T03:54:06.852Z</updated>
   <id>http://itnote.tech/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux上实现CPU孤立</title>
+    <link href="http://itnote.tech/2021/07/07/Linux%E4%B8%8A%E5%AE%9E%E7%8E%B0CPU%E5%AD%A4%E7%AB%8B/"/>
+    <id>http://itnote.tech/2021/07/07/Linux上实现CPU孤立/</id>
+    <published>2021-07-07T00:13:00.000Z</published>
+    <updated>2021-07-07T03:54:06.852Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>在Linux上可以实现CPU孤立，从而让孤立的CPU实现单任务执行，减少其他任务使用该CPU，以提升单CPU的运行效率。通过任务绑核操作，达到CPU亲和性的目的。<br>什么是CPU亲和性，以下摘自维基百科。</p><blockquote><p>处理器亲和性又称处理器关联。通过处理器关联可以将虚拟机或虚拟处理器映射到一个或多个物理处理器上。该技术基于对称多处理机操作系统中的native central queue调度算法。队列（queue）中的每一个任务（进程或线程）都有一个标签（tag）来指定它们倾向的处理器。在分配处理器的阶段，每个任务就会分配到它们所倾向的处理器上。<br>处理器亲和性利用了这样一个事实，就是进程上一次运行后的残余信息会保留在处理器的状态中（也就是指处理器的缓存）。如果下一次仍然将该进程调度到同一个处理器上，就能避免一些不好的情况（比如缓存未命中），使得进程的运行更加高效。<br>调度算法对于处理器亲和性的支持各不相同。有些调度算法在它认为合适的情况下会允许把一个任务调度到不同的处理器上。比如当两个计算密集型的任务（A和B）同时对一个处理器具有亲和性时，另外一个处理器可能就被闲置了。这种情况下许多调度算法会把任务B调度到第二个处理器上，使得多处理器的利用更加充分。<br>处理器亲和性能够有效地解决一些高速缓存的问题，但却不能缓解负载均衡的问题。而且，在异构系统中，处理器亲和性问题会变得更加复杂。</p></blockquote><p>总结就是：CPU亲和性提升了单CPU的运行效率，因为CPU只执行单个任务，降低了任务切换的成本。同时也来带了无法负载均衡任务。</p><p>所以，CPU亲和性的主要目的是为了执行并行任务，而非并发任务，此为大前提。</p><h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p>目前只在Linux上实现</p><ol><li><p>决定所需要孤立的CPU</p><ul><li><p>通过<code>htop</code>指令看到本机的CPU编号，总共有6个核心，实际编号是0-5，因此在孤立CPU的时候，应该以后者为准。<br><img src="/images/pasted-72.png" alt></p></li><li><p>在grub中设置需要孤立的CPU</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/default/grub</span><br></pre></td></tr></table></figure></li><li><p>在GRUB_COMLINE_LINUX_DEFAULT的配置中，配置类似于如下的配置以隔离CPU<br>  <img src="/images/pasted-71.png" alt></p></li><li><p>执行 <code>sudo update-grub</code>使其生效。</p></li></ul></li><li><p>中断均衡服务</p><ul><li>通过执行<code>sudo sysv-rc-conf --level 123456 irqbalance off</code>中断均衡服务</li></ul></li></ol><h1 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h1><ol><li>执行<code>stress -c 6</code>可以看到<br>CPU：1,2,3已经被孤立了，不参与任务的负载均衡。</li></ol><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/pasted-73.png" alt title>                </div>                <div class="image-caption"></div>            </figure><ol start="2"><li>执行<code>taskset -c 1 stress -c 1</code>可以看到 CPU1单独执行任务，其他CPU并不参与任务的负载均衡。</li></ol><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/images/pasted-74.png" alt title>                </div>                <div class="image-caption"></div>            </figure><h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>根据以上的配置，通过孤立CPU，达到任务的CPU亲和性的目的。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h1&gt;&lt;p&gt;在Linux上可以实现CPU孤立，从而让孤立的CPU实现单任务执行，减少其他任务使用该CPU，以提升单CPU的运行效率。通过任务绑核操作，达
+      
+    
+    </summary>
+    
+      <category term="技术分享" scheme="http://itnote.tech/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+    
+      <category term="技术分享" scheme="http://itnote.tech/tags/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>Xronos: 架构设计-3</title>
